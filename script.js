@@ -75,9 +75,9 @@ function saveLead(lead){
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
-        // Si el formulario está configurado para Netlify, permitimos el submit nativo
+        // Usaremos envío por fetch para poder mostrar confirmación
         const isNetlify = this.hasAttribute('data-netlify');
-        if (!isNetlify) e.preventDefault();
+        e.preventDefault();
 
         // Validación básica
         const name = this.querySelector('input[name="nombre"]').value;
@@ -109,15 +109,51 @@ if (contactForm) {
         };
         saveLead(lead);
 
-        // Si no es Netlify, simulamos el envío
-        if (!isNetlify) {
+        // Envío
+        if (isNetlify) {
+            // Construir payload para Netlify Forms (application/x-www-form-urlencoded)
+            const formData = new FormData(this);
+            // Asegurar form-name presente
+            if (!formData.get('form-name')) {
+                formData.append('form-name', this.getAttribute('name') || 'contact');
+            }
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                showModal('¡Felicitaciones! Estás iniciando tu proceso de cambio. Tu formulario ha sido enviado.');
+                this.reset();
+                setTimeout(() => { window.location.href = this.getAttribute('action') || '/confirmacion.html'; }, 1500);
+            })
+            .catch(() => {
+                showNotification('No pudimos enviar el formulario. Intenta nuevamente.', 'error');
+            });
+        } else {
+            // Simulación local
             showNotification('Enviando mensaje...', 'info');
             setTimeout(() => {
-                showNotification('¡Mensaje enviado exitosamente! Te contactaremos pronto.', 'success');
+                showModal('¡Felicitaciones! Estás iniciando tu proceso de cambio. Tu formulario ha sido enviado.');
                 this.reset();
-            }, 1500);
+            }, 1200);
         }
     });
+}
+
+// Modal de confirmación
+function showModal(message){
+    const existing = document.getElementById('global-modal');
+    if (existing) existing.remove();
+    const overlay = document.createElement('div');
+    overlay.id = 'global-modal';
+    overlay.style.cssText = `position:fixed; inset:0; background:rgba(0,0,0,.6); display:flex; align-items:center; justify-content:center; z-index:10002;`;
+    const card = document.createElement('div');
+    card.style.cssText = `background:#0D1625; color:#fff; border:1px solid rgba(255,216,115,.3); border-radius:14px; padding:24px 22px; max-width:520px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.45);`;
+    card.innerHTML = `<h3 style="margin:0 0 8px 0; color:#FFD873; font-size:1.4rem;">¡Gracias!</h3><p style="margin:0; line-height:1.6;">${message}</p>`;
+    overlay.appendChild(card);
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', () => overlay.remove());
 }
 
 // Email validation function

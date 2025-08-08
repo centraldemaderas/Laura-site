@@ -230,6 +230,8 @@
 .preview-subtitle{ color:#6c757d; margin:0 0 1rem 0 }
 .preview-block{ white-space:pre-wrap; color:#0D1625; opacity:.9 }
 .preview-meta{ font-size:.95rem; color:#6c757d; margin-top:.75rem }
+.preview-section{ margin-bottom:1rem; }
+.preview-label{ font-size:.75rem; color:#6c757d; text-transform:uppercase; letter-spacing:.05em; margin:0 0 .35rem 0; border-left:3px solid #FFD873; padding-left:.5rem; }
 .sticky{ position:sticky; top:90px }
 
 .editor-tabs {

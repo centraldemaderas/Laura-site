@@ -568,11 +568,22 @@ class AdminPanel {
     showEditServiceModal(service, index) {
         this.editingIndex = index;
         const modal = document.getElementById('edit-service-modal');
-        document.getElementById('edit-service-title').value = service.title || '';
-        document.getElementById('edit-service-desc').value = service.desc || '';
-        document.getElementById('edit-service-price').value = service.price || '';
-        document.getElementById('edit-service-duration').value = service.duration || '';
-        document.getElementById('edit-service-features').value = (service.features || []).join('\n');
+        const t = service.title || '';
+        const d = service.desc || '';
+        const p = service.price || '';
+        const du = service.duration || '';
+        const f = (service.features || []).join('\n');
+        document.getElementById('edit-service-title').value = t;
+        document.getElementById('edit-service-desc').value = d;
+        document.getElementById('edit-service-price').value = p;
+        document.getElementById('edit-service-duration').value = du;
+        document.getElementById('edit-service-features').value = f;
+        // preview
+        document.getElementById('preview-service-title').textContent = t || '—';
+        document.getElementById('preview-service-desc').textContent = d || '—';
+        document.getElementById('preview-service-price').textContent = p ? `$${Number(p).toLocaleString()} COP` : '$0 COP';
+        document.getElementById('preview-service-duration').textContent = du || '—';
+        document.getElementById('preview-service-features').textContent = (service.features||[]).length ? (service.features||[]).join('\n') : '—';
         modal.classList.add('active');
     }
 
@@ -605,6 +616,24 @@ class AdminPanel {
         this.closeEditServiceModal();
         this.showNotification('Servicio actualizado exitosamente', 'success');
     }
+
+    // Live preview bindings
+    bindServicePreviewInputs(){
+        const map = [
+            ['edit-service-title','preview-service-title', v=>v||'—'],
+            ['edit-service-desc','preview-service-desc', v=>v||'—'],
+            ['edit-service-price','preview-service-price', v=> v?`$${Number(v).toLocaleString()} COP`:'$0 COP'],
+            ['edit-service-duration','preview-service-duration', v=>v||'—'],
+            ['edit-service-features','preview-service-features', v=> v? v.split('\n').filter(Boolean).join('\n') : '—']
+        ];
+        map.forEach(([inputId, previewId, transform])=>{
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            if (input && preview) {
+                input.addEventListener('input', ()=>{ preview.textContent = transform(input.value); });
+            }
+        });
+    }
 }
 
 // Initialize admin panel
@@ -612,6 +641,7 @@ let adminPanel;
 document.addEventListener('DOMContentLoaded', () => {
     adminPanel = new AdminPanel();
     adminPanel.exportToGlobal();
+        adminPanel.bindServicePreviewInputs();
 });
 
 // Global functions for onclick handlers

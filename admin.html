@@ -181,10 +181,22 @@
                             </div>
                             <div class="editor-preview sticky">
                                 <div class="preview-card">
-                                    <div class="preview-title" id="preview-hero-title">Laura Giraldo Psicóloga</div>
-                                    <div class="preview-subtitle" id="preview-hero-subtitle">Acompañamiento profesional para tu bienestar emocional y mental</div>
-                                    <div class="preview-block" id="preview-about-text">Somos un equipo de psicólogas profesionales comprometidas con tu bienestar emocional y mental. Ofrecemos un espacio seguro y confidencial donde puedes explorar tus emociones, superar dificultades y desarrollar herramientas para una vida más plena.</div>
-                                    <div class="preview-meta" id="preview-cta-text">¿Lista para comenzar tu proceso de crecimiento personal? Agenda tu primera consulta y da el primer paso hacia tu bienestar emocional.</div>
+                                    <div class="preview-section">
+                                        <div class="preview-label">Título principal</div>
+                                        <div class="preview-title" id="preview-hero-title">Laura Giraldo Psicóloga</div>
+                                    </div>
+                                    <div class="preview-section">
+                                        <div class="preview-label">Subtítulo principal</div>
+                                        <div class="preview-subtitle" id="preview-hero-subtitle">Acompañamiento profesional para tu bienestar emocional y mental</div>
+                                    </div>
+                                    <div class="preview-section">
+                                        <div class="preview-label">Sobre nosotros</div>
+                                        <div class="preview-block" id="preview-about-text">Somos un equipo de psicólogas profesionales comprometidas con tu bienestar emocional y mental. Ofrecemos un espacio seguro y confidencial donde puedes explorar tus emociones, superar dificultades y desarrollar herramientas para una vida más plena.</div>
+                                    </div>
+                                    <div class="preview-section">
+                                        <div class="preview-label">CTA</div>
+                                        <div class="preview-meta" id="preview-cta-text">¿Lista para comenzar tu proceso de crecimiento personal? Agenda tu primera consulta y da el primer paso hacia tu bienestar emocional.</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -208,9 +220,18 @@
                             </div>
                             <div class="editor-preview sticky">
                                 <div class="preview-card">
-                                    <div class="preview-title" id="preview-team-title">Nuestro Equipo</div>
-                                    <div class="preview-subtitle" id="preview-team-subtitle">Conoce a nuestras psicólogas profesionales y su enfoque terapéutico</div>
-                                    <div class="preview-block" id="preview-philosophy-text">Creemos en el poder transformador de la terapia y en la capacidad innata de cada persona para crecer y sanar. Nuestro enfoque se basa en la empatía, el respeto y la evidencia científica, creando un espacio seguro donde puedes explorar tus emociones y desarrollar herramientas para una vida más plena.</div>
+                                    <div class="preview-section">
+                                        <div class="preview-label">Título</div>
+                                        <div class="preview-title" id="preview-team-title">Nuestro Equipo</div>
+                                    </div>
+                                    <div class="preview-section">
+                                        <div class="preview-label">Subtítulo</div>
+                                        <div class="preview-subtitle" id="preview-team-subtitle">Conoce a nuestras psicólogas profesionales y su enfoque terapéutico</div>
+                                    </div>
+                                    <div class="preview-section">
+                                        <div class="preview-label">Filosofía</div>
+                                        <div class="preview-block" id="preview-philosophy-text">Creemos en el poder transformador de la terapia y en la capacidad innata de cada persona para crecer y sanar. Nuestro enfoque se basa en la empatía, el respeto y la evidencia científica, creando un espacio seguro donde puedes explorar tus emociones y desarrollar herramientas para una vida más plena.</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -238,9 +259,18 @@
                             </div>
                             <div class="editor-preview sticky">
                                 <div class="preview-card">
-                                    <div class="preview-title" id="preview-contact-title">Contáctanos</div>
-                                    <div class="preview-block" id="preview-contact-text">Estamos aquí para acompañarte en tu proceso. Contáctanos para agendar una consulta o resolver cualquier duda que tengas sobre nuestros servicios.</div>
-                                    <div class="preview-meta"><strong>Email:</strong> <span id="preview-contact-email">info@lauragiraldo.com</span> · <strong>Tel:</strong> <span id="preview-contact-phone">+57 300 123 4567</span></div>
+                                    <div class="preview-section">
+                                        <div class="preview-label">Título</div>
+                                        <div class="preview-title" id="preview-contact-title">Contáctanos</div>
+                                    </div>
+                                    <div class="preview-section">
+                                        <div class="preview-label">Texto</div>
+                                        <div class="preview-block" id="preview-contact-text">Estamos aquí para acompañarte en tu proceso. Contáctanos para agendar una consulta o resolver cualquier duda que tengas sobre nuestros servicios.</div>
+                                    </div>
+                                    <div class="preview-section">
+                                        <div class="preview-label">Datos</div>
+                                        <div class="preview-meta"><strong>Email:</strong> <span id="preview-contact-email">info@lauragiraldo.com</span> · <strong>Tel:</strong> <span id="preview-contact-phone">+57 300 123 4567</span></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -518,27 +548,51 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="edit-service-title">Título del Servicio</label>
-                    <input type="text" id="edit-service-title" class="form-input">
-                </div>
-                <div class="form-group">
-                    <label for="edit-service-desc">Descripción</label>
-                    <textarea id="edit-service-desc" class="form-textarea" rows="4"></textarea>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="edit-service-price">Precio (COP)</label>
-                        <input type="number" id="edit-service-price" class="form-input">
+                <div class="editor-grid">
+                    <div class="editor-form">
+                        <div class="form-group">
+                            <label for="edit-service-title">Título del Servicio</label>
+                            <input type="text" id="edit-service-title" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-service-desc">Descripción</label>
+                            <textarea id="edit-service-desc" class="form-textarea" rows="4"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-service-price">Precio (COP)</label>
+                                <input type="number" id="edit-service-price" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-service-duration">Duración</label>
+                                <input type="text" id="edit-service-duration" class="form-input">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-service-features">Características (una por línea)</label>
+                            <textarea id="edit-service-features" class="form-textarea" rows="6"></textarea>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="edit-service-duration">Duración</label>
-                        <input type="text" id="edit-service-duration" class="form-input">
+                    <div class="editor-preview">
+                        <div class="preview-card">
+                            <div class="preview-section">
+                                <div class="preview-label">Título</div>
+                                <div class="preview-title" id="preview-service-title">—</div>
+                            </div>
+                            <div class="preview-section">
+                                <div class="preview-label">Precio y duración</div>
+                                <div class="preview-meta"><span id="preview-service-price">$0 COP</span> · <span id="preview-service-duration">—</span></div>
+                            </div>
+                            <div class="preview-section">
+                                <div class="preview-label">Descripción</div>
+                                <div class="preview-block" id="preview-service-desc">—</div>
+                            </div>
+                            <div class="preview-section">
+                                <div class="preview-label">Características</div>
+                                <div class="preview-block" id="preview-service-features">—</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="edit-service-features">Características (una por línea)</label>
-                    <textarea id="edit-service-features" class="form-textarea" rows="4"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
