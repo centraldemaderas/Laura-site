@@ -32,6 +32,9 @@
                     <li><a href="#images" class="admin-nav-link" data-section="images">
                         <i class="fas fa-images"></i> Imágenes
                     </a></li>
+                    <li><a href="#blog" class="admin-nav-link" data-section="blog">
+                        <i class="fas fa-newspaper"></i> Blog
+                    </a></li>
                     <li><a href="#leads" class="admin-nav-link" data-section="leads">
                         <i class="fas fa-user-plus"></i> Leads
                     </a></li>
@@ -142,6 +145,22 @@
                             Editar Equipo
                         </button>
                     </div>
+                </div>
+            </section>
+
+            <!-- Blog Section -->
+            <section id="blog" class="admin-section">
+                <div class="admin-header">
+                    <h1>Gestión de Blog</h1>
+                    <p>Crea, edita y elimina artículos del blog</p>
+                </div>
+                <div class="services-manager">
+                    <div class="services-header">
+                        <button class="btn-primary" onclick="adminPanel.showBlogModal()">
+                            <i class="fas fa-plus"></i> Nuevo Artículo
+                        </button>
+                    </div>
+                    <div class="services-list" id="blog-list"></div>
                 </div>
             </section>
 

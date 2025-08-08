@@ -15,6 +15,7 @@ class AdminPanel {
         this.loadServices();
         this.loadImages();
         this.loadLeads();
+        this.loadPosts();
     }
 
     // Navigation
@@ -562,6 +563,96 @@ class AdminPanel {
         window.resetContent = () => this.resetContent();
         window.saveTeam = () => this.saveTeam();
         window.saveSettings = () => this.saveSettings();
+        window.savePost = () => this.savePost();
+        window.deletePost = (i) => this.deletePost(i);
+    }
+
+    // Blog management
+    loadPosts(){
+        const saved = localStorage.getItem('adminPosts');
+        this.posts = saved ? JSON.parse(saved) : [];
+        this.renderPosts();
+    }
+
+    renderPosts(){
+        const list = document.getElementById('blog-list');
+        if (!list) return;
+        list.innerHTML = '';
+        if (!this.posts || !this.posts.length){
+            list.innerHTML = '<p style="opacity:.7">Aún no hay artículos.</p>';
+            return;
+        }
+        this.posts.forEach((p,i)=>{
+            const item = document.createElement('div');
+            item.className = 'service-item';
+            item.innerHTML = `
+                <div class="service-info">
+                    <h4>${p.title}</h4>
+                    <p>${(p.summary||'').substring(0,100)}...</p>
+                    <small>Slug: ${p.slug} · Fecha: ${p.date||'-'}</small>
+                </div>
+                <div class="service-actions">
+                    <button class="edit-btn" onclick="adminPanel.showBlogModal(${i})"><i class='fas fa-edit'></i> Editar</button>
+                    <button class="delete-btn" onclick="adminPanel.deletePost(${i})"><i class='fas fa-trash'></i> Eliminar</button>
+                </div>`;
+            list.appendChild(item);
+        });
+    }
+
+    showBlogModal(index){
+        const modal = document.createElement('div');
+        modal.className = 'modal active';
+        modal.id = 'blog-modal';
+        const p = (typeof index==='number') ? this.posts[index] : { title:'', slug:'', date:'', summary:'', cover:'', content:'' };
+        this.editingPostIndex = (typeof index==='number') ? index : null;
+        modal.innerHTML = `
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <h2>${this.editingPostIndex!=null?'Editar Artículo':'Nuevo Artículo'}</h2>
+                <button class='modal-close' onclick="document.getElementById('blog-modal').remove()"><i class='fas fa-times'></i></button>
+              </div>
+              <div class='modal-body'>
+                <div class='form-group'><label>Título</label><input id='post-title-input' class='form-input' value='${p.title||''}'></div>
+                <div class='form-row'>
+                  <div class='form-group'><label>Slug</label><input id='post-slug-input' class='form-input' value='${p.slug||''}'></div>
+                  <div class='form-group'><label>Fecha</label><input id='post-date-input' type='date' class='form-input' value='${p.date||''}'></div>
+                </div>
+                <div class='form-group'><label>Resumen</label><textarea id='post-summary-input' class='form-textarea' rows='3'>${p.summary||''}</textarea></div>
+                <div class='form-group'><label>Imagen (URL)</label><input id='post-cover-input' class='form-input' value='${p.cover||''}'></div>
+                <div class='form-group'><label>Contenido (HTML)</label><textarea id='post-body-input' class='form-textarea' rows='8'>${p.content||''}</textarea></div>
+              </div>
+              <div class='modal-footer'>
+                <button class='btn-secondary' onclick="document.getElementById('blog-modal').remove()">Cancelar</button>
+                <button class='btn-primary' onclick='savePost()'>Guardar</button>
+              </div>
+            </div>`;
+        document.body.appendChild(modal);
+    }
+
+    savePost(){
+        const post = {
+            title: document.getElementById('post-title-input').value.trim(),
+            slug: document.getElementById('post-slug-input').value.trim(),
+            date: document.getElementById('post-date-input').value,
+            summary: document.getElementById('post-summary-input').value.trim(),
+            cover: document.getElementById('post-cover-input').value.trim(),
+            content: document.getElementById('post-body-input').value
+        };
+        if (!post.title || !post.slug) { this.showNotification('Título y slug son obligatorios', 'error'); return; }
+        if (!this.posts) this.posts = [];
+        if (this.editingPostIndex!=null) this.posts[this.editingPostIndex] = post; else this.posts.unshift(post);
+        localStorage.setItem('adminPosts', JSON.stringify(this.posts));
+        const m = document.getElementById('blog-modal'); if (m) m.remove();
+        this.renderPosts();
+        this.showNotification('Artículo guardado', 'success');
+    }
+
+    deletePost(i){
+        if (!confirm('¿Eliminar este artículo?')) return;
+        this.posts.splice(i,1);
+        localStorage.setItem('adminPosts', JSON.stringify(this.posts));
+        this.renderPosts();
+        this.showNotification('Artículo eliminado', 'success');
     }
 
     // Edit service modal logic

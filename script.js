@@ -75,7 +75,7 @@ function saveLead(lead){
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
-        // Usaremos envío por fetch para poder mostrar confirmación
+        // Usaremos envío por fetch con fallback a submit nativo
         const isNetlify = this.hasAttribute('data-netlify');
         e.preventDefault();
 
@@ -110,25 +110,47 @@ if (contactForm) {
         saveLead(lead);
 
         // Envío
+        const formData = new FormData(this);
         if (isNetlify) {
-            // Construir payload para Netlify Forms (application/x-www-form-urlencoded)
-            const formData = new FormData(this);
             // Asegurar form-name presente
             if (!formData.get('form-name')) {
                 formData.append('form-name', this.getAttribute('name') || 'contact');
             }
-            fetch('/', {
+            const encoded = new URLSearchParams(formData).toString();
+            const target = this.getAttribute('action') || '/';
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 8000);
+
+            showNotification('Enviando mensaje...', 'info');
+            fetch(target, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams(formData).toString()
+                body: encoded,
+                signal: controller.signal
             })
-            .then(() => {
+            .then((res) => {
+                clearTimeout(timeout);
+                if (!res.ok && res.status !== 0) throw new Error('Bad response');
                 showModal('¡Felicitaciones! Estás iniciando tu proceso de cambio. Tu formulario ha sido enviado.');
                 this.reset();
-                setTimeout(() => { window.location.href = this.getAttribute('action') || '/confirmacion.html'; }, 1500);
+                setTimeout(() => { window.location.href = this.getAttribute('action') || '/confirmacion.html'; }, 1400);
             })
             .catch(() => {
-                showNotification('No pudimos enviar el formulario. Intenta nuevamente.', 'error');
+                // Fallback: submit nativo para que Netlify lo procese
+                try {
+                    const hidden = document.createElement('form');
+                    hidden.method = 'POST';
+                    hidden.action = target;
+                    hidden.style.display = 'none';
+                    Array.from(formData.entries()).forEach(([k,v]) => {
+                        const input = document.createElement('input');
+                        input.name = k; input.value = v; hidden.appendChild(input);
+                    });
+                    document.body.appendChild(hidden);
+                    hidden.submit();
+                } catch (err) {
+                    showNotification('No pudimos enviar el formulario. Intenta nuevamente.', 'error');
+                }
             });
         } else {
             // Simulación local
@@ -303,6 +325,18 @@ window.addEventListener('load', () => {
             img.setAttribute('loading', 'lazy');
         }
     });
+
+    // Apply booking provider (Calendly or Google Calendar embed)
+    try{
+        const settings = JSON.parse(localStorage.getItem('adminSettings')||'{}');
+        const bookingEmbed = document.getElementById('booking-embed');
+        if (bookingEmbed && settings.googleCalendarEmbed) {
+            bookingEmbed.style.display = 'block';
+            bookingEmbed.innerHTML = `<iframe src="${settings.googleCalendarEmbed}" style="width:100%; height:100%; border:0;" frameborder="0" scrolling="no"></iframe>`;
+            const calendly = document.getElementById('calendly-inline-widget');
+            if (calendly) calendly.style.display = 'none';
+        }
+    }catch(_){ }
 });
 
 // Parallax effect for hero section

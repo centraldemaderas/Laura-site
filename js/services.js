@@ -8,9 +8,14 @@ const DEFAULT_SERVICES = [
     { id: 'evaluacion', title: 'Evaluación Psicológica', desc: 'Evaluación completa para identificar necesidades específicas y crear un plan de tratamiento personalizado. Incluye entrevista clínica y pruebas estandarizadas.', price: 200000, duration: '120 minutos', features: ['Evaluación completa', 'Entrevista clínica detallada', 'Pruebas estandarizadas', 'Informe escrito detallado', 'Plan de tratamiento personalizado'] }
 ];
 
-// Función para cargar servicios desde el archivo JSON (con fallback)
+// Función para cargar servicios priorizando los guardados desde el administrador
 async function loadServices() {
     try {
+        const local = JSON.parse(localStorage.getItem('adminServices') || '[]');
+        if (Array.isArray(local) && local.length) {
+            renderServices(local);
+            return;
+        }
         const response = await fetch('services.json', { cache: 'no-store' });
         if (!response.ok) throw new Error('No se pudo cargar los servicios');
         const services = await response.json();

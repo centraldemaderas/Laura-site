@@ -334,6 +334,8 @@
     padding: 2rem;
 }
 
+#blog-list .service-item{ align-items:flex-start }
+
 .service-item {
     background: #f8f9fa;
     border: 1px solid #e9ecef;

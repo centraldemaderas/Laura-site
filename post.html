@@ -141,7 +141,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const slug = urlParams.get('slug');
             
-            // Sample blog posts data
+            // Sample blog posts data + dynamic admin posts
             const posts = {
                 'autocuidado-emocional': {
                     title: 'Autocuidado Emocional: Estrategias para el Día a Día',
@@ -251,6 +251,22 @@
                     `
                 }
             };
+            // Merge dynamic posts from localStorage
+            try {
+                const adminPosts = JSON.parse(localStorage.getItem('adminPosts')||'[]');
+                if (Array.isArray(adminPosts)) {
+                    adminPosts.forEach(p => {
+                        if (p && p.slug) {
+                            posts[p.slug] = {
+                                title: p.title,
+                                date: p.date ? new Date(p.date+ 'T00:00:00').toLocaleDateString('es-CO', { year:'numeric', month:'long', day:'numeric' }) : '',
+                                cover: p.cover,
+                                content: p.content || `<p>${p.summary||''}</p>`
+                            };
+                        }
+                    });
+                }
+            } catch(_){}
             
             if (posts[slug]) {
                 document.getElementById('post-title').textContent = posts[slug].title;

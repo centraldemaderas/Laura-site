@@ -71,7 +71,7 @@
                 <p>Consejos profesionales y recursos para mejorar tu salud mental</p>
             </div>
             
-            <div class="blog-grid">
+            <div class="blog-grid" id="blog-grid">
                 <article class="blog-card">
                     <div class="blog-card-image">
                         <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop" alt="Mujer practicando autocuidado emocional" loading="lazy" onerror="this.onerror=null;this.src='assets/blog/autocuidado-emocional.svg';">
@@ -218,5 +218,34 @@
 
     <script src="script.js"></script>
     <script src="js/chat.js"></script>
+    <script>
+      // Render dynamic posts from admin (localStorage)
+      (function(){
+        try {
+          const grid = document.getElementById('blog-grid');
+          if (!grid) return;
+          const saved = JSON.parse(localStorage.getItem('adminPosts')||'[]');
+          if (!Array.isArray(saved) || !saved.length) return;
+          // Prepend admin posts
+          saved.forEach(function(p){
+            const card = document.createElement('article');
+            card.className = 'blog-card';
+            const img = p.cover || 'assets/blog/autocuidado-emocional.svg';
+            const dateStr = p.date ? new Date(p.date+ 'T00:00:00').toLocaleDateString('es-CO', { year:'numeric', month:'long', day:'numeric' }) : '';
+            card.innerHTML = `
+              <div class="blog-card-image">
+                <img src="${img}" alt="${p.title||'Artículo'}" loading="lazy" onerror="this.onerror=null;this.src='assets/blog/autocuidado-emocional.svg';">
+              </div>
+              <div class="blog-card-content">
+                <h3>${p.title||''}</h3>
+                <div class="date">${dateStr}</div>
+                <p>${(p.summary||'').substring(0,140)}${(p.summary||'').length>140?'…':''}</p>
+                <a href="post.html?slug=${encodeURIComponent(p.slug)}" class="btn btn-secondary">Leer Más</a>
+              </div>`;
+            grid.prepend(card);
+          });
+        } catch (e) { /* no-op */ }
+      })();
+    </script>
 </body>
 </html> 
