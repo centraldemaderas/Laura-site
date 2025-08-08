@@ -4,6 +4,7 @@ class AdminPanel {
         this.currentSection = 'dashboard';
         this.services = [];
         this.images = [];
+        this.leads = [];
         this.init();
     }
 
@@ -13,6 +14,7 @@ class AdminPanel {
         this.updateDashboard();
         this.loadServices();
         this.loadImages();
+        this.loadLeads();
     }
 
     // Navigation
@@ -112,9 +114,16 @@ class AdminPanel {
     updateDashboard() {
         const servicesCount = document.getElementById('services-count');
         const imagesCount = document.getElementById('images-count');
+        const leadsCount = document.getElementById('leads-count');
+        const leadsPending = document.getElementById('leads-pending');
 
-        servicesCount.textContent = `${this.services.length} servicios`;
-        imagesCount.textContent = `${this.images.length} imágenes`;
+        servicesCount && (servicesCount.textContent = `${this.services.length} servicios`);
+        imagesCount && (imagesCount.textContent = `${this.images.length} imágenes`);
+        if (leadsCount && leadsPending) {
+            const pending = this.leads.filter(l => (l.estado||'pendiente') === 'pendiente').length;
+            leadsCount.textContent = `${this.leads.length} recibidos`;
+            leadsPending.textContent = `${pending} pendientes`;
+        }
     }
 
     // Content Management
@@ -158,8 +167,15 @@ class AdminPanel {
     // Services Management
     async loadServices() {
         try {
-            const response = await fetch('services.json');
-            this.services = await response.json();
+            const saved = localStorage.getItem('adminServices');
+            if (saved) {
+                this.services = JSON.parse(saved);
+            } else {
+                const response = await fetch('services.json');
+                this.services = await response.json();
+                // Primera carga: guarda una copia editable local
+                this.saveServices();
+            }
             this.renderServices();
             this.updateDashboard();
         } catch (error) {
@@ -256,7 +272,14 @@ class AdminPanel {
 
     saveServices() {
         localStorage.setItem('adminServices', JSON.stringify(this.services));
-        // In a real application, you would save to the server here
+        // Intento de persistir en Netlify Function (no bloqueante)
+        try {
+            fetch('/.netlify/functions/save-services', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(this.services)
+            }).catch(()=>{});
+        } catch(_) {}
     }
 
     generateId() {
@@ -357,6 +380,110 @@ class AdminPanel {
         }
     }
 
+    // Leads Management
+    loadLeads(){
+        try{
+            const local = JSON.parse(localStorage.getItem('siteLeads') || '[]');
+            const admin = JSON.parse(localStorage.getItem('adminLeads') || '[]');
+            // Merge by createdAt+email
+            const map = new Map();
+            [...admin, ...local].forEach(l => {
+                const key = `${l.createdAt}-${l.email}`;
+                map.set(key, { ...l });
+            });
+            this.leads = Array.from(map.values()).sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt));
+            this.saveLeads();
+            this.renderLeads();
+            this.updateDashboard();
+        }catch(err){
+            console.error('Error loading leads', err);
+        }
+        // Bind actions
+        const exportBtn = document.getElementById('export-leads');
+        const clearBtn = document.getElementById('clear-leads');
+        exportBtn && exportBtn.addEventListener('click', ()=> this.exportLeadsCSV());
+        clearBtn && clearBtn.addEventListener('click', ()=> this.clearLeads());
+    }
+
+    saveLeads(){
+        localStorage.setItem('adminLeads', JSON.stringify(this.leads));
+    }
+
+    renderLeads(){
+        const tbody = document.querySelector('#leads-table tbody');
+        if(!tbody) return;
+        tbody.innerHTML = '';
+        this.leads.forEach((lead, index)=>{
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${new Date(lead.createdAt).toLocaleString()}</td>
+                <td>${lead.nombre||''}</td>
+                <td>${lead.email||''}</td>
+                <td>${lead.telefono||''}</td>
+                <td>${lead.servicio||''}</td>
+                <td>
+                    <select class="lead-select" data-field="estado" data-index="${index}">
+                        <option ${lead.estado==='pendiente'?'selected':''} value="pendiente">Pendiente</option>
+                        <option ${lead.estado==='contactado'?'selected':''} value="contactado">Contactado</option>
+                        <option ${lead.estado==='cerrado'?'selected':''} value="cerrado">Cerrado</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="lead-select" data-field="resultado" data-index="${index}">
+                        <option ${lead.resultado===''?'selected':''} value="">—</option>
+                        <option ${lead.resultado==='No contesta'?'selected':''} value="No contesta">No contesta</option>
+                        <option ${lead.resultado==='Agenda llamada'?'selected':''} value="Agenda llamada">Agenda llamada</option>
+                        <option ${lead.resultado==='Cita agendada'?'selected':''} value="Cita agendada">Cita agendada</option>
+                        <option ${lead.resultado==='No interesado'?'selected':''} value="No interesado">No interesado</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="lead-select" data-field="paciente" data-index="${index}">
+                        <option ${lead.paciente==='Sin definir'?'selected':''} value="Sin definir">Sin definir</option>
+                        <option ${lead.paciente==='Sí'?'selected':''} value="Sí">Sí</option>
+                        <option ${lead.paciente==='No'?'selected':''} value="No">No</option>
+                    </select>
+                </td>
+                <td><input class="lead-input" data-field="notas" data-index="${index}" value="${lead.notas||''}" placeholder="Notas"></td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        // Bind change events
+        tbody.querySelectorAll('.lead-select, .lead-input').forEach(el=>{
+            el.addEventListener('change', (e)=>{
+                const field = e.target.getAttribute('data-field');
+                const idx = parseInt(e.target.getAttribute('data-index'));
+                const value = e.target.value;
+                this.leads[idx][field] = value;
+                this.saveLeads();
+                this.updateDashboard();
+            });
+        });
+    }
+
+    exportLeadsCSV(){
+        const header = ['Fecha','Nombre','Email','Teléfono','Servicio','Estado','Resultado','Paciente','Notas'];
+        const rows = this.leads.map(l=>[
+            new Date(l.createdAt).toLocaleString(), l.nombre||'', l.email||'', l.telefono||'', l.servicio||'', l.estado||'', l.resultado||'', l.paciente||'', (l.notas||'').replace(/\n/g,' ')
+        ]);
+        const csv = [header, ...rows].map(r=> r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+        const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = `leads-${new Date().toISOString().slice(0,10)}.csv`; a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    clearLeads(){
+        if(confirm('Esto eliminará los leads guardados localmente. ¿Continuar?')){
+            this.leads = [];
+            this.saveLeads();
+            this.renderLeads();
+            this.updateDashboard();
+        }
+    }
+
     // Team Management
     handleTeamPhotoUpload(file, member) {
         if (file && file.type.startsWith('image/')) {
@@ -429,10 +556,54 @@ class AdminPanel {
         window.showAddServiceModal = () => this.showAddServiceModal();
         window.closeAddServiceModal = () => this.closeAddServiceModal();
         window.addNewService = () => this.addNewService();
+        window.updateService = () => this.updateService();
+        window.closeEditServiceModal = () => this.closeEditServiceModal();
         window.saveContent = () => this.saveContent();
         window.resetContent = () => this.resetContent();
         window.saveTeam = () => this.saveTeam();
         window.saveSettings = () => this.saveSettings();
+    }
+
+    // Edit service modal logic
+    showEditServiceModal(service, index) {
+        this.editingIndex = index;
+        const modal = document.getElementById('edit-service-modal');
+        document.getElementById('edit-service-title').value = service.title || '';
+        document.getElementById('edit-service-desc').value = service.desc || '';
+        document.getElementById('edit-service-price').value = service.price || '';
+        document.getElementById('edit-service-duration').value = service.duration || '';
+        document.getElementById('edit-service-features').value = (service.features || []).join('\n');
+        modal.classList.add('active');
+    }
+
+    closeEditServiceModal() {
+        const modal = document.getElementById('edit-service-modal');
+        if (modal) modal.classList.remove('active');
+    }
+
+    updateService() {
+        if (this.editingIndex === undefined || this.editingIndex === null) return;
+        const title = document.getElementById('edit-service-title').value;
+        const desc = document.getElementById('edit-service-desc').value;
+        const price = parseInt(document.getElementById('edit-service-price').value);
+        const duration = document.getElementById('edit-service-duration').value;
+        const featuresText = document.getElementById('edit-service-features').value;
+
+        if (!title || !desc || !price || !duration) {
+            this.showNotification('Por favor completa todos los campos', 'error');
+            return;
+        }
+        const features = featuresText.split('\n').filter(f => f.trim());
+
+        this.services[this.editingIndex] = {
+            ...this.services[this.editingIndex],
+            title, desc, price, duration, features
+        };
+        this.saveServices();
+        this.renderServices();
+        this.updateDashboard();
+        this.closeEditServiceModal();
+        this.showNotification('Servicio actualizado exitosamente', 'success');
     }
 }
 

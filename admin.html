@@ -32,6 +32,9 @@
                     <li><a href="#images" class="admin-nav-link" data-section="images">
                         <i class="fas fa-images"></i> Imágenes
                     </a></li>
+                    <li><a href="#leads" class="admin-nav-link" data-section="leads">
+                        <i class="fas fa-user-plus"></i> Leads
+                    </a></li>
                     <li><a href="#team" class="admin-nav-link" data-section="team">
                         <i class="fas fa-users"></i> Equipo
                     </a></li>
@@ -90,6 +93,26 @@
                     
                     <div class="dashboard-card">
                         <div class="card-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Leads</h3>
+                            <p id="leads-count">0 recibidos</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Sin contactar</h3>
+                            <p id="leads-pending">0 pendientes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-icon">
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="card-content">
@@ -137,63 +160,89 @@
                     </div>
                     
                     <div class="tab-content active" id="home-content">
-                        <div class="form-group">
-                            <label for="hero-title">Título Principal</label>
-                            <input type="text" id="hero-title" value="Laura Giraldo Psicóloga" class="form-input">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="hero-subtitle">Subtítulo Principal</label>
-                            <textarea id="hero-subtitle" class="form-textarea" rows="3">Acompañamiento profesional para tu bienestar emocional y mental</textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="about-text">Texto Sobre Nosotros</label>
-                            <textarea id="about-text" class="form-textarea" rows="6">Somos un equipo de psicólogas profesionales comprometidas con tu bienestar emocional y mental. Ofrecemos un espacio seguro y confidencial donde puedes explorar tus emociones, superar dificultades y desarrollar herramientas para una vida más plena.</textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="cta-text">Texto CTA Principal</label>
-                            <textarea id="cta-text" class="form-textarea" rows="3">¿Lista para comenzar tu proceso de crecimiento personal? Agenda tu primera consulta y da el primer paso hacia tu bienestar emocional.</textarea>
+                        <div class="editor-grid">
+                            <div class="editor-form">
+                                <div class="form-group">
+                                    <label for="hero-title">Título Principal</label>
+                                    <input type="text" id="hero-title" value="Laura Giraldo Psicóloga" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hero-subtitle">Subtítulo Principal</label>
+                                    <textarea id="hero-subtitle" class="form-textarea" rows="3">Acompañamiento profesional para tu bienestar emocional y mental</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="about-text">Texto Sobre Nosotros</label>
+                                    <textarea id="about-text" class="form-textarea" rows="6">Somos un equipo de psicólogas profesionales comprometidas con tu bienestar emocional y mental. Ofrecemos un espacio seguro y confidencial donde puedes explorar tus emociones, superar dificultades y desarrollar herramientas para una vida más plena.</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cta-text">Texto CTA Principal</label>
+                                    <textarea id="cta-text" class="form-textarea" rows="3">¿Lista para comenzar tu proceso de crecimiento personal? Agenda tu primera consulta y da el primer paso hacia tu bienestar emocional.</textarea>
+                                </div>
+                            </div>
+                            <div class="editor-preview sticky">
+                                <div class="preview-card">
+                                    <div class="preview-title" id="preview-hero-title">Laura Giraldo Psicóloga</div>
+                                    <div class="preview-subtitle" id="preview-hero-subtitle">Acompañamiento profesional para tu bienestar emocional y mental</div>
+                                    <div class="preview-block" id="preview-about-text">Somos un equipo de psicólogas profesionales comprometidas con tu bienestar emocional y mental. Ofrecemos un espacio seguro y confidencial donde puedes explorar tus emociones, superar dificultades y desarrollar herramientas para una vida más plena.</div>
+                                    <div class="preview-meta" id="preview-cta-text">¿Lista para comenzar tu proceso de crecimiento personal? Agenda tu primera consulta y da el primer paso hacia tu bienestar emocional.</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="tab-content" id="about-content">
-                        <div class="form-group">
-                            <label for="team-title">Título del Equipo</label>
-                            <input type="text" id="team-title" value="Nuestro Equipo" class="form-input">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="team-subtitle">Subtítulo del Equipo</label>
-                            <textarea id="team-subtitle" class="form-textarea" rows="2">Conoce a nuestras psicólogas profesionales y su enfoque terapéutico</textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="philosophy-text">Filosofía</label>
-                            <textarea id="philosophy-text" class="form-textarea" rows="6">Creemos en el poder transformador de la terapia y en la capacidad innata de cada persona para crecer y sanar. Nuestro enfoque se basa en la empatía, el respeto y la evidencia científica, creando un espacio seguro donde puedes explorar tus emociones y desarrollar herramientas para una vida más plena.</textarea>
+                        <div class="editor-grid">
+                            <div class="editor-form">
+                                <div class="form-group">
+                                    <label for="team-title">Título del Equipo</label>
+                                    <input type="text" id="team-title" value="Nuestro Equipo" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="team-subtitle">Subtítulo del Equipo</label>
+                                    <textarea id="team-subtitle" class="form-textarea" rows="2">Conoce a nuestras psicólogas profesionales y su enfoque terapéutico</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="philosophy-text">Filosofía</label>
+                                    <textarea id="philosophy-text" class="form-textarea" rows="6">Creemos en el poder transformador de la terapia y en la capacidad innata de cada persona para crecer y sanar. Nuestro enfoque se basa en la empatía, el respeto y la evidencia científica, creando un espacio seguro donde puedes explorar tus emociones y desarrollar herramientas para una vida más plena.</textarea>
+                                </div>
+                            </div>
+                            <div class="editor-preview sticky">
+                                <div class="preview-card">
+                                    <div class="preview-title" id="preview-team-title">Nuestro Equipo</div>
+                                    <div class="preview-subtitle" id="preview-team-subtitle">Conoce a nuestras psicólogas profesionales y su enfoque terapéutico</div>
+                                    <div class="preview-block" id="preview-philosophy-text">Creemos en el poder transformador de la terapia y en la capacidad innata de cada persona para crecer y sanar. Nuestro enfoque se basa en la empatía, el respeto y la evidencia científica, creando un espacio seguro donde puedes explorar tus emociones y desarrollar herramientas para una vida más plena.</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="tab-content" id="contact-content">
-                        <div class="form-group">
-                            <label for="contact-title">Título de Contacto</label>
-                            <input type="text" id="contact-title" value="Contáctanos" class="form-input">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="contact-text">Texto de Contacto</label>
-                            <textarea id="contact-text" class="form-textarea" rows="4">Estamos aquí para acompañarte en tu proceso. Contáctanos para agendar una consulta o resolver cualquier duda que tengas sobre nuestros servicios.</textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="contact-email">Email de Contacto</label>
-                            <input type="email" id="contact-email" value="info@lauragiraldo.com" class="form-input">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="contact-phone">Teléfono</label>
-                            <input type="tel" id="contact-phone" value="+57 300 123 4567" class="form-input">
+                        <div class="editor-grid">
+                            <div class="editor-form">
+                                <div class="form-group">
+                                    <label for="contact-title">Título de Contacto</label>
+                                    <input type="text" id="contact-title" value="Contáctanos" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-text">Texto de Contacto</label>
+                                    <textarea id="contact-text" class="form-textarea" rows="4">Estamos aquí para acompañarte en tu proceso. Contáctanos para agendar una consulta o resolver cualquier duda que tengas sobre nuestros servicios.</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-email">Email de Contacto</label>
+                                    <input type="email" id="contact-email" value="info@lauragiraldo.com" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-phone">Teléfono</label>
+                                    <input type="tel" id="contact-phone" value="+57 300 123 4567" class="form-input">
+                                </div>
+                            </div>
+                            <div class="editor-preview sticky">
+                                <div class="preview-card">
+                                    <div class="preview-title" id="preview-contact-title">Contáctanos</div>
+                                    <div class="preview-block" id="preview-contact-text">Estamos aquí para acompañarte en tu proceso. Contáctanos para agendar una consulta o resolver cualquier duda que tengas sobre nuestros servicios.</div>
+                                    <div class="preview-meta"><strong>Email:</strong> <span id="preview-contact-email">info@lauragiraldo.com</span> · <strong>Tel:</strong> <span id="preview-contact-phone">+57 300 123 4567</span></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -251,6 +300,39 @@
                 </div>
             </section>
 
+            <!-- Leads Section -->
+            <section id="leads" class="admin-section">
+                <div class="admin-header">
+                    <h1>Leads de Formularios</h1>
+                    <p>Controla y gestiona los contactos recibidos</p>
+                </div>
+
+                <div class="leads-manager">
+                    <div class="leads-actions">
+                        <button class="btn-secondary" id="export-leads"><i class="fas fa-file-export"></i> Exportar CSV</button>
+                        <button class="btn-primary" id="clear-leads"><i class="fas fa-trash-alt"></i> Limpiar</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="leads-table" id="leads-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Teléfono</th>
+                                    <th>Servicio</th>
+                                    <th>Estado</th>
+                                    <th>Resultado</th>
+                                    <th>Paciente</th>
+                                    <th>Notas</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
             <!-- Team Section -->
             <section id="team" class="admin-section">
                 <div class="admin-header">
@@ -301,13 +383,10 @@
                             <div class="form-group">
                                 <label for="luisa-photo">Foto</label>
                                 <div class="photo-upload">
-                                    <div class="photo-placeholder" id="luisa-photo-preview">
-                                        <i class="fas fa-user-md"></i>
-                                        <p>Sin foto</p>
-                                    </div>
+                                    <img src="assets/luisa-vasquez.jpg.JPEG" alt="Luisa Fernanda Vásquez" id="luisa-photo-preview" class="photo-preview" loading="lazy">
                                     <input type="file" id="luisa-photo-upload" accept="image/*" style="display: none;">
                                     <button class="btn-secondary" onclick="document.getElementById('luisa-photo-upload').click()">
-                                        <i class="fas fa-camera"></i> Agregar Foto
+                                        <i class="fas fa-camera"></i> Cambiar Foto
                                     </button>
                                 </div>
                             </div>
@@ -425,6 +504,46 @@
             <div class="modal-footer">
                 <button class="btn-secondary" onclick="closeAddServiceModal()">Cancelar</button>
                 <button class="btn-primary" onclick="addNewService()">Agregar Servicio</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Service Modal -->
+    <div id="edit-service-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Editar Servicio</h2>
+                <button class="modal-close" onclick="closeEditServiceModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="edit-service-title">Título del Servicio</label>
+                    <input type="text" id="edit-service-title" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="edit-service-desc">Descripción</label>
+                    <textarea id="edit-service-desc" class="form-textarea" rows="4"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-service-price">Precio (COP)</label>
+                        <input type="number" id="edit-service-price" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-service-duration">Duración</label>
+                        <input type="text" id="edit-service-duration" class="form-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-service-features">Características (una por línea)</label>
+                    <textarea id="edit-service-features" class="form-textarea" rows="4"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeEditServiceModal()">Cancelar</button>
+                <button class="btn-primary" onclick="updateService()">Guardar Cambios</button>
             </div>
         </div>
     </div>

@@ -59,37 +59,64 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Form submission handling
+// Lead storage helpers
+function saveLead(lead){
+    try{
+        const key='siteLeads';
+        const list=JSON.parse(localStorage.getItem(key) || '[]');
+        list.unshift(lead);
+        localStorage.setItem(key, JSON.stringify(list));
+    }catch(err){
+        console.warn('No se pudo guardar el lead localmente', err);
+    }
+}
+
+// Form submission handling (Netlify Forms compatible)
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(this);
-        const name = this.querySelector('input[type="text"]').value;
-        const email = this.querySelector('input[type="email"]').value;
-        const subject = this.querySelectorAll('input[type="text"]')[1].value;
-        const message = this.querySelector('textarea').value;
-        
-        // Simple validation
-        if (!name || !email || !subject || !message) {
+        // Si el formulario está configurado para Netlify, permitimos el submit nativo
+        const isNetlify = this.hasAttribute('data-netlify');
+        if (!isNetlify) e.preventDefault();
+
+        // Validación básica
+        const name = this.querySelector('input[name="nombre"]').value;
+        const email = this.querySelector('input[name="email"]').value;
+        const message = this.querySelector('textarea[name="mensaje"]').value;
+        if (!name || !email || !message) {
+            e.preventDefault();
             showNotification('Por favor completa todos los campos', 'error');
             return;
         }
-        
         if (!isValidEmail(email)) {
+            e.preventDefault();
             showNotification('Por favor ingresa un email válido', 'error');
             return;
         }
-        
-        // Simulate form submission
-        showNotification('Enviando mensaje...', 'info');
-        
-        setTimeout(() => {
-            showNotification('¡Mensaje enviado exitosamente! Te contactaremos pronto.', 'success');
-            this.reset();
-        }, 2000);
+
+        // Guarda lead local para el administrador
+        const lead = {
+            createdAt: new Date().toISOString(),
+            nombre: name,
+            email: email,
+            telefono: this.querySelector('input[name="telefono"]').value || '',
+            servicio: this.querySelector('select[name="servicio"]').value || '',
+            mensaje: message,
+            estado: 'pendiente',
+            resultado: '',
+            paciente: 'Sin definir',
+            notas: ''
+        };
+        saveLead(lead);
+
+        // Si no es Netlify, simulamos el envío
+        if (!isNetlify) {
+            showNotification('Enviando mensaje...', 'info');
+            setTimeout(() => {
+                showNotification('¡Mensaje enviado exitosamente! Te contactaremos pronto.', 'success');
+                this.reset();
+            }, 1500);
+        }
     });
 }
 

@@ -410,6 +410,8 @@ p {
     gap: 2rem;
 }
 
+.services-cta{ margin-top:2rem; display:flex; justify-content:center }
+
 .service-card {
     background: rgba(255, 255, 255, 0.05);
     padding: 2.5rem;

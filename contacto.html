@@ -108,18 +108,22 @@
                         </div>
                     </div>
                 </div>
-                <form class="contact-form">
+                <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/confirmacion.html">
+                    <input type="hidden" name="form-name" value="contact">
+                    <p style="display:none">
+                        <label>No completar: <input name="bot-field" /></label>
+                    </p>
                     <div class="form-group">
-                        <input type="text" placeholder="Nombre completo" required>
+                        <input type="text" name="nombre" placeholder="Nombre completo" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" placeholder="Email" required>
+                        <input type="email" name="email" placeholder="Email" required>
                     </div>
                     <div class="form-group">
-                        <input type="tel" placeholder="Teléfono" required>
+                        <input type="tel" name="telefono" placeholder="Teléfono" required>
                     </div>
                     <div class="form-group">
-                        <select required>
+                        <select name="servicio" required>
                             <option value="">Selecciona un servicio</option>
                             <option value="individual">Terapia Individual</option>
                             <option value="pareja">Terapia de Pareja</option>
@@ -129,7 +133,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <textarea placeholder="Cuéntame sobre ti y lo que te trae a terapia" rows="5" required></textarea>
+                        <textarea name="mensaje" placeholder="Cuéntame sobre ti y lo que te trae a terapia" rows="5" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
                 </form>

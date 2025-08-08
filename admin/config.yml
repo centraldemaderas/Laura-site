@@ -52,3 +52,12 @@ collections:
           - { label: "Contenido HTML", name: "body", widget: "code", default_language: "html" }
 
 
+  - name: "ajustes"
+    label: "Ajustes"
+    files:
+      - name: "configuracion"
+        label: "Configuración del Sitio"
+        file: "data/settings.json"
+        fields:
+          - { label: "Email de Notificaciones", name: "notificationEmail", widget: "string", default: "davidmarin@centraldemaderas.com" }
+
