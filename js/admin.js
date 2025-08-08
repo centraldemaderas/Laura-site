@@ -5,6 +5,7 @@ class AdminPanel {
         this.services = [];
         this.images = [];
         this.leads = [];
+        this.posts = [];
         this.init();
     }
 
@@ -125,6 +126,38 @@ class AdminPanel {
             leadsCount.textContent = `${this.leads.length} recibidos`;
             leadsPending.textContent = `${pending} pendientes`;
         }
+
+        // Analytics KPIs
+        try{
+            const analytics = JSON.parse(localStorage.getItem('siteAnalytics')||'{}');
+            const kVisits = document.getElementById('kpi-visits');
+            const kUsers = document.getElementById('kpi-users');
+            const kTime = document.getElementById('kpi-time');
+            if (kVisits && analytics.daily){
+                const total = Object.values(analytics.daily).reduce((a,b)=>a+(b||0),0);
+                kVisits.textContent = total;
+            }
+            if (kUsers && analytics.users){ kUsers.textContent = analytics.users; }
+            if (kTime && analytics.time){
+                const avg = analytics.time.sessions? Math.floor(analytics.time.totalSeconds/analytics.time.sessions):0;
+                const mm = String(Math.floor(avg/60)).padStart(2,'0');
+                const ss = String(avg%60).padStart(2,'0');
+                kTime.textContent = `${mm}:${ss}`;
+            }
+
+            // Charts
+            const visitsCtx = document.getElementById('visitsChart');
+            if (visitsCtx && window.Chart){
+                const labels = Object.keys(analytics.daily||{}).sort().slice(-14);
+                const data = labels.map(d => (analytics.daily||{})[d]||0);
+                new Chart(visitsCtx, { type:'line', data:{ labels, datasets:[{ label:'Visitas', data, borderColor:'#8FB7A5', backgroundColor:'rgba(143,183,165,.25)', tension:.3, fill:true }] }, options:{ plugins:{legend:{display:false}}, scales:{ y:{ beginAtZero:true } } });
+            }
+            const pagesCtx = document.getElementById('pagesChart');
+            if (pagesCtx && window.Chart){
+                const entries = Object.entries(analytics.pages||{}).sort((a,b)=>b[1]-a[1]).slice(0,6);
+                new Chart(pagesCtx, { type:'bar', data:{ labels: entries.map(e=>e[0]), datasets:[{ label:'Vistas', data: entries.map(e=>e[1]), backgroundColor:'#FFD873' }] }, options:{ plugins:{legend:{display:false}}, scales:{ y:{ beginAtZero:true } } });
+            }
+        }catch(_){ }
     }
 
     // Content Management
@@ -568,9 +601,25 @@ class AdminPanel {
     }
 
     // Blog management
+    getDefaultPosts(){
+        // Semillas iniciales basadas en el sitio actual
+        return [
+            { slug:'autocuidado-emocional', title:'Autocuidado Emocional: Estrategias para el Día a Día', date:'2024-11-15', cover:'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop', summary:'Estrategias prácticas para cuidar tu salud emocional en la rutina diaria.', content:'<p>El autocuidado emocional es fundamental para mantener una buena salud mental.</p>', active:true },
+            { slug:'tecnicas-ansiedad', title:'Técnicas para Manejar la Ansiedad', date:'2024-11-10', cover:'https://images.unsplash.com/photo-1523246191918-0a1f1a17f6d3?q=80&w=1200&auto=format&fit=crop', summary:'Técnicas y herramientas para manejar la ansiedad de manera efectiva.', content:'<p>La ansiedad es una respuesta natural del cuerpo, pero cuando se vuelve excesiva puede interferir con nuestra vida.</p>', active:true },
+            { slug:'comunicacion-asertiva', title:'Comunicación Asertiva en las Relaciones', date:'2024-11-05', cover:'https://images.unsplash.com/photo-1529336953121-4d4f0b1b1a5e?q=80&w=1200&auto=format&fit=crop', summary:'Mejora tus relaciones con una comunicación clara y respetuosa.', content:'<p>La comunicación asertiva es la habilidad de expresar tus pensamientos y sentimientos de forma honesta y respetuosa.</p>', active:true },
+            { slug:'mindfulness-vida-cotidiana', title:'El Poder del Mindfulness en la Vida Cotidiana', date:'2024-11-01', cover:'https://images.unsplash.com/photo-1518600506278-4e8ef466b810?q=80&w=1200&auto=format&fit=crop', summary:'Integra mindfulness en tu día para reducir el estrés y ganar claridad.', content:'<p>Integrar mindfulness en tu día a día reduce el estrés y mejora la claridad mental.</p>', active:true },
+            { slug:'superando-depresion', title:'Superando la Depresión: Un Camino hacia la Recuperación', date:'2024-10-25', cover:'https://images.unsplash.com/photo-1520975693416-35a0d6a5f0c9?q=80&w=1200&auto=format&fit=crop', summary:'Información valiosa sobre la depresión y cómo abordarla.', content:'<p>La recuperación es posible con apoyo adecuado, hábitos saludables y autocompasión.</p>', active:true },
+            { slug:'desarrollo-autoestima', title:'Desarrollo de la Autoestima: Construyendo Confianza', date:'2024-10-20', cover:'https://images.unsplash.com/photo-1520975928316-56c0d6b7d3f5?q=80&w=1200&auto=format&fit=crop', summary:'Estrategias prácticas para fortalecer tu autoestima.', content:'<p>Fortalecer la autoestima implica aceptar imperfecciones y celebrar avances.</p>', active:true },
+        ];
+    }
     loadPosts(){
         const saved = localStorage.getItem('adminPosts');
-        this.posts = saved ? JSON.parse(saved) : [];
+        if (saved) {
+            this.posts = JSON.parse(saved);
+        } else {
+            this.posts = this.getDefaultPosts();
+            localStorage.setItem('adminPosts', JSON.stringify(this.posts));
+        }
         this.renderPosts();
     }
 
@@ -587,11 +636,17 @@ class AdminPanel {
             item.className = 'service-item';
             item.innerHTML = `
                 <div class="service-info">
-                    <h4>${p.title}</h4>
-                    <p>${(p.summary||'').substring(0,100)}...</p>
-                    <small>Slug: ${p.slug} · Fecha: ${p.date||'-'}</small>
+                    <div style="display:flex; gap:12px; align-items:flex-start;">
+                        <img src="${p.cover||''}" alt="thumb" style="width:72px; height:72px; object-fit:cover; border-radius:8px; border:1px solid #e9ecef;" onerror="this.style.display='none'"/>
+                        <div>
+                            <h4 style="margin:0 0 .25rem 0;">${p.title}</h4>
+                            <p style="margin:0 0 .25rem 0; opacity:.75;">${(p.summary||'').substring(0,120)}${(p.summary||'').length>120?'…':''}</p>
+                            <small>Slug: ${p.slug} · Fecha: ${p.date||'-'}</small>
+                        </div>
+                    </div>
                 </div>
                 <div class="service-actions">
+                    <label class="switch"><input type="checkbox" ${p.active!==false?'checked':''} onchange="adminPanel.togglePostActive(${i}, this.checked)"><span class="slider"></span></label>
                     <button class="edit-btn" onclick="adminPanel.showBlogModal(${i})"><i class='fas fa-edit'></i> Editar</button>
                     <button class="delete-btn" onclick="adminPanel.deletePost(${i})"><i class='fas fa-trash'></i> Eliminar</button>
                 </div>`;
@@ -620,6 +675,7 @@ class AdminPanel {
                 <div class='form-group'><label>Resumen</label><textarea id='post-summary-input' class='form-textarea' rows='3'>${p.summary||''}</textarea></div>
                 <div class='form-group'><label>Imagen (URL)</label><input id='post-cover-input' class='form-input' value='${p.cover||''}'></div>
                 <div class='form-group'><label>Contenido (HTML)</label><textarea id='post-body-input' class='form-textarea' rows='8'>${p.content||''}</textarea></div>
+                <div class='form-group'><label><input type='checkbox' id='post-active-input' ${p.active!==false?'checked':''}> Activo</label></div>
               </div>
               <div class='modal-footer'>
                 <button class='btn-secondary' onclick="document.getElementById('blog-modal').remove()">Cancelar</button>
@@ -636,7 +692,8 @@ class AdminPanel {
             date: document.getElementById('post-date-input').value,
             summary: document.getElementById('post-summary-input').value.trim(),
             cover: document.getElementById('post-cover-input').value.trim(),
-            content: document.getElementById('post-body-input').value
+            content: document.getElementById('post-body-input').value,
+            active: document.getElementById('post-active-input').checked
         };
         if (!post.title || !post.slug) { this.showNotification('Título y slug son obligatorios', 'error'); return; }
         if (!this.posts) this.posts = [];
@@ -653,6 +710,12 @@ class AdminPanel {
         localStorage.setItem('adminPosts', JSON.stringify(this.posts));
         this.renderPosts();
         this.showNotification('Artículo eliminado', 'success');
+    }
+
+    togglePostActive(i, checked){
+        this.posts[i].active = !!checked;
+        localStorage.setItem('adminPosts', JSON.stringify(this.posts));
+        this.showNotification(checked?'Artículo activado':'Artículo desactivado','success');
     }
 
     // Edit service modal logic

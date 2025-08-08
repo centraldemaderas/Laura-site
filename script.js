@@ -75,9 +75,7 @@ function saveLead(lead){
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
-        // Usaremos envío por fetch con fallback a submit nativo
         const isNetlify = this.hasAttribute('data-netlify');
-        e.preventDefault();
 
         // Validación básica
         const name = this.querySelector('input[name="nombre"]').value;
@@ -110,49 +108,12 @@ if (contactForm) {
         saveLead(lead);
 
         // Envío
-        const formData = new FormData(this);
         if (isNetlify) {
-            // Asegurar form-name presente
-            if (!formData.get('form-name')) {
-                formData.append('form-name', this.getAttribute('name') || 'contact');
-            }
-            const encoded = new URLSearchParams(formData).toString();
-            const target = this.getAttribute('action') || '/';
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 8000);
-
+            // Deja que Netlify procese el envío nativo (redirigirá a action)
             showNotification('Enviando mensaje...', 'info');
-            fetch(target, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: encoded,
-                signal: controller.signal
-            })
-            .then((res) => {
-                clearTimeout(timeout);
-                if (!res.ok && res.status !== 0) throw new Error('Bad response');
-                showModal('¡Felicitaciones! Estás iniciando tu proceso de cambio. Tu formulario ha sido enviado.');
-                this.reset();
-                setTimeout(() => { window.location.href = this.getAttribute('action') || '/confirmacion.html'; }, 1400);
-            })
-            .catch(() => {
-                // Fallback: submit nativo para que Netlify lo procese
-                try {
-                    const hidden = document.createElement('form');
-                    hidden.method = 'POST';
-                    hidden.action = target;
-                    hidden.style.display = 'none';
-                    Array.from(formData.entries()).forEach(([k,v]) => {
-                        const input = document.createElement('input');
-                        input.name = k; input.value = v; hidden.appendChild(input);
-                    });
-                    document.body.appendChild(hidden);
-                    hidden.submit();
-                } catch (err) {
-                    showNotification('No pudimos enviar el formulario. Intenta nuevamente.', 'error');
-                }
-            });
+            return true; // no hacemos preventDefault
         } else {
+            e.preventDefault();
             // Simulación local
             showNotification('Enviando mensaje...', 'info');
             setTimeout(() => {
@@ -459,3 +420,34 @@ function handleSwipe() {
         }
     }
 } 
+
+// Simple client-side analytics (localStorage)
+(function trackPage(){
+  try{
+    const key = 'siteAnalytics';
+    const data = JSON.parse(localStorage.getItem(key) || '{}');
+    const path = window.location.pathname || '/';
+    const day = new Date().toISOString().slice(0,10);
+    const sessionKey = 'siteAnalytics_sessionStart';
+    if (!sessionStorage.getItem(sessionKey)) sessionStorage.setItem(sessionKey, Date.now());
+    // visits per day
+    data.daily = data.daily || {}; data.daily[day] = (data.daily[day]||0) + 1;
+    // per page
+    data.pages = data.pages || {}; data.pages[path] = (data.pages[path]||0) + 1;
+    // users unique by local id
+    if (!data.uid){ data.uid = Math.random().toString(36).slice(2); data.users = (data.users||0)+1; }
+    // save
+    localStorage.setItem(key, JSON.stringify(data));
+    // store unload to compute duration
+    window.addEventListener('beforeunload', ()=>{
+      try{
+        const start = Number(sessionStorage.getItem(sessionKey)||Date.now());
+        const duration = Math.max(0, Math.floor((Date.now() - start)/1000));
+        const d = JSON.parse(localStorage.getItem(key) || '{}');
+        d.time = d.time || { totalSeconds:0, sessions:0 };
+        d.time.totalSeconds += duration; d.time.sessions += 1;
+        localStorage.setItem(key, JSON.stringify(d));
+      }catch(_){}}
+    );
+  }catch(_){ }
+})();

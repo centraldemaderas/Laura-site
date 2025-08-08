@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Admin — Resultados del Chequeo</title>
+<style>
+  body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#0D1625;color:#E9EEF6}
+  .wrap{max-width:1100px;margin:0 auto;padding:24px}
+  h1{font-size:24px;margin:0 0 12px}
+  .muted{color:#B8C0CC}
+  table{width:100%;border-collapse:collapse;margin-top:12px}
+  th,td{border-bottom:1px solid rgba(255,255,255,.12);padding:8px;vertical-align:top;font-size:14px}
+  .row{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#E9EEF6;cursor:pointer}
+  .btn:hover{background:rgba(255,255,255,.06)}
+  .primary{background:#FFD873;color:#1A1F2B;border-color:#FFD873}
+  textarea{width:100%;min-height:60px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#E9EEF6;padding:8px}
+</style>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="row" style="justify-content:space-between;align-items:center">
+    <h1>Resultados del Chequeo (PHQ-9 / GAD-7)</h1>
+    <div class="row">
+      <button class="btn" id="login">Iniciar sesión</button>
+      <button class="btn" id="logout">Salir</button>
+    </div>
+  </div>
+  <div class="muted">Solo usuarios con rol <b>admin</b> pueden ver/editar.</div>
+
+  <div id="table"></div>
+</div>
+<script>
+  const tableDiv = document.getElementById("table");
+  const loginBtn = document.getElementById("login");
+  const logoutBtn = document.getElementById("logout");
+
+  // Identity UI
+  loginBtn.onclick = () => netlifyIdentity.open("login");
+  logoutBtn.onclick = () => netlifyIdentity.logout();
+  netlifyIdentity.on("login", ()=>location.reload());
+  netlifyIdentity.on("logout", ()=>location.reload());
+
+  async function token(){ const u = netlifyIdentity.currentUser(); if(!u) return null; return await u.jwt(true); }
+
+  async function fetchList(){
+    const t = await token(); if(!t){ tableDiv.innerHTML = "<p>Inicia sesión para ver resultados.</p>"; return; }
+    const res = await fetch("/.netlify/functions/quiz-list", { headers: { Authorization: "Bearer "+t } });
+    if(!res.ok){ tableDiv.innerHTML = "<p>No autorizado.</p>"; return; }
+    const data = await res.json();
+    renderTable(data);
+  }
+
+  function renderTable(items){
+    if(!items.length){ tableDiv.innerHTML = "<p>No hay resultados aún.</p>"; return; }
+    let html = "<table><thead><tr><th>Fecha</th><th>Usuario</th><th>Scores</th><th>Riesgo</th><th>Notas (editable)</th><th>Acciones</th></tr></thead><tbody>";
+    for(const it of items){
+      const name = it.name || "—", email = it.email || "—";
+      const scores = [
+        (it.phq9!=null?`PHQ-9: <b>${it.phq9}</b> (${it.phq9Severity||"—"})`:""),
+        (it.gad7!=null?`GAD-7: <b>${it.gad7}</b> (${it.gad7Severity||"—"})`:"")
+      ].filter(Boolean).join("<br>");
+      html += `<tr>
+        <td>${new Date(it.createdAt||it.ts).toLocaleString()}</td>
+        <td>${name}<br><span class="muted">${email}</span></td>
+        <td>${scores}</td>
+        <td>${it.riskFlag ? "<b style='color:#FFD873'>ALERTA</b>" : "—"}</td>
+        <td>
+          <textarea data-id="${it.id}" class="note">${(it.notes||"")}</textarea>
+        </td>
+        <td>
+          <div class="row">
+            <button class="btn primary" data-save="${it.id}">Guardar</button>
+            <button class="btn" data-archive="${it.id}">${it.archived?"Desarchivar":"Archivar"}</button>
+            <button class="btn" data-del="${it.id}">Borrar</button>
+          </div>
+        </td>
+      </tr>`;
+    }
+    html += "</tbody></table>";
+    tableDiv.innerHTML = html;
+
+    // Bind actions
+    document.querySelectorAll("[data-save]").forEach(btn=>{
+      btn.onclick = async ()=>{
+        const id = btn.getAttribute("data-save");
+        const noteEl = document.querySelector(`textarea[data-id='${id}']`);
+        const t = await token();
+        await fetch("/.netlify/functions/quiz-update", {
+          method:"POST",
+          headers:{ "Content-Type":"application/json", Authorization:"Bearer "+t },
+          body: JSON.stringify({ id, patch: { notes: noteEl.value } })
+        });
+        alert("Guardado.");
+      };
+    });
+    document.querySelectorAll("[data-archive]").forEach(btn=>{
+      btn.onclick = async ()=>{
+        const id = btn.getAttribute("data-archive");
+        const t = await token();
+        await fetch("/.netlify/functions/quiz-update", {
+          method:"POST",
+          headers:{ "Content-Type":"application/json", Authorization:"Bearer "+t },
+          body: JSON.stringify({ id, patch: { archived: true } })
+        });
+        fetchList();
+      };
+    });
+    document.querySelectorAll("[data-del]").forEach(btn=>{
+      btn.onclick = async ()=>{
+        if(!confirm("¿Borrar este registro?")) return;
+        const id = btn.getAttribute("data-del");
+        const t = await token();
+        await fetch("/.netlify/functions/quiz-delete?id="+encodeURIComponent(id), {
+          method:"POST",
+          headers:{ Authorization:"Bearer "+t }
+        });
+        fetchList();
+      };
+    });
+  }
+
+  fetchList();
+</script>
+</body>
+</html>
+
+

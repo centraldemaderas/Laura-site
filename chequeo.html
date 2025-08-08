@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chequeo de Bienestar (PHQ-9 / GAD-7) | Laura Giraldo</title>
+  <meta name="description" content="Autotest breve y orientativo para ánimo (PHQ-9) y ansiedad (GAD-7).">
+  <style>
+    :root{ --brand-navy:#0D1625; --brand-gold:#FFD873; --brand-sage:#8FB7A5; --text:#E9EEF6; --muted:#B8C0CC; --line:rgba(255,255,255,.12); --bgcard:rgba(255,255,255,.05); }
+    body{margin:0;background:var(--brand-navy);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .h1{font-size:clamp(28px,4.5vw,40px);font-weight:900;letter-spacing:.2px;color:var(--brand-gold);margin:6px 0 4px}
+    .muted{color:var(--muted)} .small{font-size:12px}
+    .card{background:var(--bgcard);border:1px solid var(--line);border-radius:16px;padding:18px}
+    .grid{display:grid;gap:12px} .grid-2{grid-template-columns:1fr} @media(min-width:900px){.grid-2{grid-template-columns:1.1fr .9fr}}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:12px;border:1px solid transparent;text-decoration:none;cursor:pointer}
+    .btn-primary{background:var(--brand-gold);color:#1A1F2B;box-shadow:0 6px 16px rgba(255,216,115,.22)}
+    .btn-ghost{border-color:var(--line);color:var(--text);background:transparent}
+    .chip{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:12px}
+    .q{padding:12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.04)}
+    .q legend{font-weight:600;margin-bottom:6px}
+    .opt{display:flex;gap:8px;align-items:center;padding:10px;border-radius:10px;border:1px solid var(--line)}
+    .opt[data-checked="1"]{border-color:var(--brand-gold);background:rgba(255,216,115,.12)}
+    .hidden{display:none}
+    /* Galería */
+    .gallery{display:grid;gap:10px;grid-template-columns:repeat(6,1fr)}
+    .gallery figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000}
+    .gallery img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+    .hero{margin-top:8px}
+    @media(max-width:899px){.gallery{grid-template-columns:repeat(3,1fr)}}
+    @media print {.btn{display:none} body{background:#fff;color:#111} .card{background:#fff;border-color:#ddd}}
+    /* Form contactos */
+    .control{display:flex;flex-direction:column;gap:6px}
+    input[type="text"],input[type="email"]{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--text)}
+  </style>
+  <link rel="preload" as="image" href="/assets/photos/chequeo/chequeo-01.webp">
+  <link rel="preload" as="image" href="/assets/photos/chequeo/chequeo-02.webp">
+  <link rel="preload" as="image" href="/assets/photos/chequeo/chequeo-03.webp">
+  <link rel="preload" as="image" href="/assets/photos/chequeo/chequeo-04.webp">
+  <link rel="preload" as="image" href="/assets/photos/chequeo/chequeo-05.webp">
+  <link rel="preload" as="image" href="/assets/photos/chequeo/chequeo-06.webp">
+</head>
+<body>
+  <main class="container">
+    <!-- HERO + GALERÍA DE IMÁGENES REALES -->
+    <section class="grid grid-2 hero">
+      <div>
+        <div class="chip">Autotest breve · 3–5 min · No es diagnóstico</div>
+        <h1 class="h1">Chequeo rápido de bienestar</h1>
+        <p class="muted">Evalúa tu <b>ánimo</b> (PHQ-9) y/o <b>ansiedad</b> (GAD-7). Tus respuestas no se guardan salvo que lo autorices.</p>
+        <div class="row small muted" style="margin-top:8px"><span>Privacidad primero</span> · <span>Accesible</span> · <span>Resultados claros + CTA</span></div>
+      </div>
+      <div>
+        <div class="gallery" aria-label="Galería de personas reales">
+          <figure><img src="/assets/photos/chequeo/chequeo-01.webp" loading="lazy" alt="Joven respirando profundamente al aire libre"></figure>
+          <figure><img src="/assets/photos/chequeo/chequeo-02.webp" loading="lazy" alt="Pareja conversando en una sesión de terapia"></figure>
+          <figure><img src="/assets/photos/chequeo/chequeo-03.webp" loading="lazy" alt="Mujer en teleconsulta con psicóloga"></figure>
+          <figure><img src="/assets/photos/chequeo/chequeo-04.webp" loading="lazy" alt="Persona escribiendo en un diario de emociones"></figure>
+          <figure><img src="/assets/photos/chequeo/chequeo-05.webp" loading="lazy" alt="Amigos caminando y dándose apoyo"></figure>
+          <figure><img src="/assets/photos/chequeo/chequeo-06.webp" loading="lazy" alt="Sesión individual con expresión serena"></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENÚ DEL WIZARD -->
+    <section id="lgw-menu" class="card" style="margin-top:18px">
+      <h2 style="margin:0 0 6px 0">Elige tu chequeo</h2>
+      <div class="muted small">Últimas 2 semanas · orientativo · privacidad primero.</div>
+
+      <!-- Datos opcionales para contacto (se guardan con el resultado) -->
+      <div class="row" style="margin-top:12px">
+        <div class="control" style="min-width:230px">
+          <label class="small muted" for="lgw-name">Nombre (opcional)</label>
+          <input id="lgw-name" type="text" placeholder="Tu nombre (opcional)">
+        </div>
+        <div class="control" style="min-width:260px">
+          <label class="small muted" for="lgw-email">Email (opcional)</label>
+          <input id="lgw-email" type="email" placeholder="tu@email.com">
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:12px">
+        <button class="btn btn-primary" data-start="phq9">Estado de ánimo (PHQ-9)</button>
+        <button class="btn btn-primary" data-start="gad7">Ansiedad (GAD-7)</button>
+        <button class="btn btn-ghost" data-start="both">Ambos (recomendado)</button>
+      </div>
+      <label class="row small" style="margin-top:10px">
+        <input type="checkbox" id="lgw-consent">
+        <span class="muted">Guardar mis resultados localmente (en este dispositivo) para consultarlos luego.</span>
+      </label>
+      <p class="small muted" style="margin-top:8px">¿En crisis? Si piensas hacerte daño o no te sientes seguro/a, busca ayuda inmediata.</p>
+    </section>
+
+    <section id="lgw-assessment" class="hidden"></section>
+    <section id="lgw-result" class="hidden"></section>
+  </main>
+  <script src="/js/chequeo.js"></script>
+</body>
+</html>
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chequeo de Bienestar (PHQ‑9 / GAD‑7) | Laura Giraldo</title>
+  <meta name="description" content="Autotest breve de ánimo y ansiedad. Resultados orientativos con CTA para agendar.">
+  <style>
+    :root{
+      --brand-navy:#0D1625; --brand-gold:#FFD873; --brand-sage:#8FB7A5;
+      --text:#E9EEF6; --muted:#B8C0CC; --line:rgba(255,255,255,.12); --bgcard:rgba(255,255,255,.05);
+    }
+    body{margin:0; background:var(--brand-navy); color:var(--text); font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;}
+    .lgw-container{max-width:960px;margin:0 auto;padding:24px;}
+    .lgw-h1{font-size:clamp(28px,4.5vw,40px);font-weight:900;letter-spacing:.2px;color:var(--brand-gold);margin:6px 0 4px;}
+    .lgw-muted{color:var(--muted)}
+    .lgw-card{background:var(--bgcard);border:1px solid var(--line);border-radius:16px;padding:18px}
+    .lgw-grid{display:grid;gap:12px}
+    @media(min-width:640px){.lgw-grid-2{grid-template-columns:repeat(2,1fr)}}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:12px;border:1px solid transparent;text-decoration:none;cursor:pointer}
+    .btn-primary{background:var(--brand-gold);color:#1A1F2B;box-shadow:0 6px 16px rgba(255,216,115,.22)}
+    .btn-ghost{border-color:var(--line);color:var(--text);background:transparent}
+    .btn:hover{transform:translateY(-1px)}
+    .lgw-chip{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:12px}
+    .q{padding:12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.04)}
+    .q legend{font-weight:600;margin-bottom:6px}
+    .opt{display:flex;gap:8px;align-items:center;padding:10px;border-radius:10px;border:1px solid var(--line)}
+    .opt[data-checked="1"]{border-color:var(--brand-gold);background:rgba(255,216,115,.12)}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .mt-1{margin-top:4px}.mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}.mt-5{margin-top:20px}.mt-6{margin-top:24px}
+    .small{font-size:12px}
+    .center{text-align:center}
+    .hidden{display:none}
+    @media print {.btn{display:none} body{background:#fff;color:#111} .lgw-card{background:#fff;border-color:#ddd}}
+  </style>
+</head>
+<body>
+  <main class="lgw-container">
+    <header class="mt-2">
+      <div class="lgw-chip">Autotest breve · 3–5 min · No es diagnóstico</div>
+      <h1 class="lgw-h1">Chequeo rápido de bienestar</h1>
+      <p class="lgw-muted">Evalúa tu <b>ánimo</b> (PHQ‑9) y/o <b>ansiedad</b> (GAD‑7). Tus respuestas no se guardan salvo que lo autorices.</p>
+    </header>
+
+    <section id="lgw-menu" class="lgw-card mt-4">
+      <h2 style="margin:0 0 6px 0">Elige tu chequeo</h2>
+      <div class="lgw-muted small">Últimas 2 semanas · orientativo · privacidad primero.</div>
+      <div class="lgw-grid lgw-grid-2 mt-3">
+        <button class="btn btn-primary" data-start="phq9">Estado de ánimo (PHQ‑9)</button>
+        <button class="btn btn-primary" data-start="gad7">Ansiedad (GAD‑7)</button>
+        <button class="btn btn-ghost" data-start="both">Ambos (recomendado)</button>
+      </div>
+      <label class="row mt-3 small">
+        <input type="checkbox" id="lgw-consent">
+        <span class="lgw-muted">Guardar mis resultados localmente (en este dispositivo) para consultarlos luego.</span>
+      </label>
+      <p class="small lgw-muted mt-3">¿En crisis?. Si piensas hacerte daño o no te sientes seguro/a, busca ayuda inmediata.</p>
+    </section>
+
+    <section id="lgw-assessment" class="hidden"></section>
+    <section id="lgw-result" class="hidden"></section>
+  </main>
+
+  <script src="js/chequeo.js"></script>
+</body>
+</html>
