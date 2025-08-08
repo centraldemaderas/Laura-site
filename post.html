@@ -273,9 +273,18 @@
                 document.getElementById('post-date').textContent = posts[slug].date;
                 document.getElementById('post-body').innerHTML = posts[slug].content;
                 document.title = posts[slug].title + ' - Laura Giraldo Psicóloga';
-                if (posts[slug].cover) {
-                    const coverEl = document.getElementById('post-cover');
-                    coverEl.src = posts[slug].cover;
+                const coverEl = document.getElementById('post-cover');
+                const src = posts[slug].cover || '';
+                if (src) {
+                    coverEl.src = src;
+                    coverEl.alt = posts[slug].title || 'Imagen del artículo';
+                    coverEl.style.display = 'block';
+                    coverEl.onerror = function(){
+                        // Fallback a una imagen local genérica si la URL externa falla
+                        this.onerror = null; this.src = 'assets/blog/autocuidado-emocional.svg'; this.style.display = 'block';
+                    };
+                } else {
+                    coverEl.src = 'assets/blog/autocuidado-emocional.svg';
                     coverEl.style.display = 'block';
                 }
             } else {

@@ -21,12 +21,15 @@ class AdminPanel {
 
     // Navigation
     setupEventListeners() {
-        // Navigation links
+        // Navigation links with hash-sync
         document.querySelectorAll('.admin-nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const section = link.getAttribute('data-section');
-                this.showSection(section);
+                if (section) {
+                    this.showSection(section);
+                    try { window.location.hash = section; } catch(_) {}
+                }
             });
         });
 
@@ -97,6 +100,9 @@ class AdminPanel {
 
         this.currentSection = section;
     }
+
+    // Ensure the correct section is shown on load based on hash
+    // (called from DOMContentLoaded at the bottom)
 
     showTab(tab) {
         // Update tab buttons
@@ -796,6 +802,13 @@ document.addEventListener('DOMContentLoaded', () => {
     adminPanel = new AdminPanel();
     adminPanel.exportToGlobal();
         adminPanel.bindServicePreviewInputs();
+    // Hash routing for admin sections
+    try{
+        const hash = (window.location.hash||'').replace('#','');
+        if (hash) {
+            adminPanel.showSection(hash);
+        }
+    }catch(_){ }
 });
 
 // Global functions for onclick handlers
