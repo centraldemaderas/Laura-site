@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva tu Consulta - Laura Giraldo Psicóloga</title>
+    <meta name="description" content="Agenda tu consulta psicológica con Laura Giraldo. Sesiones individuales, de pareja y online disponibles.">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+    <!-- Calendly Widget -->
+    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a class="nav-logo" href="index.html" aria-label="Ir al inicio">
+                    <img src="assets/logo-laura.png.png" alt="Laura Giraldo Psicóloga" onerror="this.onerror=null;this.src='assets/logo.png';" />
+                </a>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="sobre-mi.html" class="nav-link">Nuestro Equipo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="servicios.html" class="nav-link">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="reserva.html" class="nav-link">Reserva</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contacto.html" class="nav-link">Contacto</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1 class="hero-title">Reserva tu Consulta</h1>
+            <p class="hero-subtitle">Elige el horario que mejor se adapte a tu agenda y comienza tu proceso de transformación personal</p>
+        </div>
+    </section>
+
+    <!-- Calendly Section -->
+    <section class="calendly-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Elige tu Horario</h2>
+                <p>Selecciona la fecha y hora que prefieras para tu consulta</p>
+            </div>
+            
+            <div id="calendly-inline-widget" 
+                 style="min-width:320px;height:630px;"
+                 data-url="https://calendly.com/lauragiraldo/consulta?hide_landing_page_details=1">
+            </div>
+            
+            <!-- Payment Section -->
+            <div class="payment-section" style="text-align: center; margin-top: 2rem;">
+                <h3 style="color: #FFD873; margin-bottom: 1rem;">Pago Seguro</h3>
+                <p style="margin-bottom: 2rem; opacity: 0.8;">Una vez agendada tu consulta, puedes realizar el pago de forma segura</p>
+                
+                <button id="payBtn" class="btn btn-primary" style="font-size: 1.1rem; padding: 15px 30px;">
+                    <i class="fas fa-credit-card" style="margin-right: 10px;"></i>
+                    Pagar ahora (COP)
+                </button>
+                
+                <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">
+                    <i class="fas fa-shield-alt" style="margin-right: 5px;"></i>
+                    Pago 100% seguro con Wompi
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Information Section -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>¿Qué esperar de tu primera sesión?</h2>
+                    <p>Tu primera consulta es un espacio para conocernos y establecer los objetivos de tu proceso terapéutico. Durante esta sesión:</p>
+                    
+                    <ul style="margin: 1.5rem 0; padding-left: 2rem;">
+                        <li>Conversaremos sobre lo que te trae a terapia</li>
+                        <li>Exploraremos tus expectativas y objetivos</li>
+                        <li>Te explicaré mi enfoque y metodología</li>
+                        <li>Estableceremos un plan de trabajo personalizado</li>
+                        <li>Resolveremos cualquier duda que tengas</li>
+                    </ul>
+                    
+                    <p>Es normal sentir nervios antes de la primera sesión. Mi compromiso es crear un espacio seguro y acogedor donde te sientas cómodo para compartir.</p>
+                </div>
+                <div class="about-image">
+                    <div class="about-placeholder">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Laura Giraldo</h3>
+                    <p>Psicóloga profesional comprometida con tu bienestar emocional y crecimiento personal.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="sobre-mi.html">Nuestro Equipo</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Servicios</h4>
+                    <ul>
+                        <li><a href="servicios.html">Terapia Individual</a></li>
+                        <li><a href="servicios.html">Terapia de Pareja</a></li>
+                        <li><a href="servicios.html">Terapia Online</a></li>
+                        <li><a href="reserva.html">Agendar Consulta</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Laura Giraldo. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div id="chat-bubble" aria-label="Abrir chat">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <!-- Wompi Script -->
+    <script src="https://checkout.wompi.co/widget.js" data-wompi-public-key="pub_test_TU_LLAVE"></script>
+    <script src="js/wompi.js"></script>
+    <script src="script.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html> 

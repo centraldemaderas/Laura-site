@@ -1,0 +1,84 @@
+{
+  "site": {
+    "title": "Laura Giraldo - Psicóloga",
+    "description": "Psicóloga profesional especializada en terapia individual, de pareja y familiar. Acompañamiento terapéutico para tu bienestar emocional y mental.",
+    "contact": {
+      "email": "info@lauragiraldo.com",
+      "phone": "+57 300 123 4567"
+    }
+  },
+  "integrations": {
+    "calendly": "https://calendly.com/lauragiraldo/consulta",
+    "wompi": "pub_test_TU_LLAVE",
+    "googleAnalytics": "G-XXXXXXXXXX"
+  },
+  "content": {
+    "home": {
+      "heroTitle": "Laura Giraldo Psicóloga",
+      "heroSubtitle": "Acompañamiento profesional para tu bienestar emocional y mental",
+      "aboutText": "Somos un equipo de psicólogas profesionales comprometidas con tu bienestar emocional y mental. Ofrecemos un espacio seguro y confidencial donde puedes explorar tus emociones, superar dificultades y desarrollar herramientas para una vida más plena.",
+      "ctaText": "¿Lista para comenzar tu proceso de crecimiento personal? Agenda tu primera consulta y da el primer paso hacia tu bienestar emocional."
+    },
+    "team": {
+      "title": "Nuestro Equipo",
+      "subtitle": "Conoce a nuestras psicólogas profesionales y su enfoque terapéutico",
+      "philosophy": "Creemos en el poder transformador de la terapia y en la capacidad innata de cada persona para crecer y sanar. Nuestro enfoque se basa en la empatía, el respeto y la evidencia científica, creando un espacio seguro donde puedes explorar tus emociones y desarrollar herramientas para una vida más plena."
+    },
+    "contact": {
+      "title": "Contáctanos",
+      "text": "Estamos aquí para acompañarte en tu proceso. Contáctanos para agendar una consulta o resolver cualquier duda que tengas sobre nuestros servicios."
+    }
+  },
+  "team": {
+    "laura": {
+      "name": "Laura Giraldo",
+      "title": "Psicóloga Clínica",
+      "description": "Psicóloga clínica con más de 8 años de experiencia en el acompañamiento terapéutico. Especializada en terapia individual, de pareja y familiar. Mi enfoque se basa en la empatía y la evidencia científica, creando un espacio seguro donde puedes explorar tus emociones y desarrollar herramientas para una vida más plena.",
+      "photo": "assets/laura-giraldo.jpg"
+    },
+    "luisa": {
+      "name": "Luisa Fernanda Vásquez",
+      "title": "Magister en Psicología de la Salud",
+      "description": "Magister en Psicología de la Salud con enfoque holístico en el bienestar integral. Especializada en el manejo del estrés, ansiedad y desarrollo personal. Mi abordaje combina técnicas tradicionales con enfoques innovadores para promover el equilibrio entre mente, cuerpo y espíritu.",
+      "photo": null
+    }
+  },
+  "credentials": [
+    {
+      "title": "Psicología Clínica",
+      "description": "Especialización en terapia individual y familiar"
+    },
+    {
+      "title": "Magister en Psicología de la Salud",
+      "description": "Enfoque holístico en bienestar integral"
+    },
+    {
+      "title": "Terapia de Pareja",
+      "description": "Especialización en dinámicas de pareja"
+    },
+    {
+      "title": "Manejo del Estrés",
+      "description": "Técnicas para el manejo de ansiedad y estrés"
+    },
+    {
+      "title": "Desarrollo Personal",
+      "description": "Acompañamiento en procesos de crecimiento"
+    },
+    {
+      "title": "Más de 10 años de experiencia",
+      "description": "Experiencia combinada en psicología clínica"
+    }
+  ],
+  "specialties": [
+    "Terapia Individual",
+    "Terapia de Pareja",
+    "Terapia Familiar",
+    "Terapia Online",
+    "Terapia para Adolescentes",
+    "Evaluación Psicológica",
+    "Manejo de Ansiedad y Estrés",
+    "Desarrollo Personal",
+    "Autoestima",
+    "Comunicación Asertiva"
+  ]
+} 

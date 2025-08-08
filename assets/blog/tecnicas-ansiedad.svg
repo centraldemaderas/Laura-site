@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0D1625"/>
+      <stop offset="100%" stop-color="#1a2332"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g)"/>
+  <g opacity="0.25" fill="#8FB7A5">
+    <rect x="140" y="180" width="920" height="440" rx="220"/>
+    <rect x="240" y="260" width="720" height="280" rx="140" fill="#FFD873" opacity="0.15"/>
+  </g>
+  <text x="60" y="660" font-family="Inter, Arial, sans-serif" font-size="64" fill="#FFD873" font-weight="700">Técnicas para la Ansiedad</text>
+  <text x="60" y="720" font-family="Inter, Arial, sans-serif" font-size="28" fill="#E0E7FF" opacity="0.85">Respiración, cognición y hábitos</text>
+</svg>
+

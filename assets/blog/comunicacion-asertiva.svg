@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0D1625"/>
+      <stop offset="100%" stop-color="#1a2332"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g)"/>
+  <g fill="#FFD873" opacity="0.25">
+    <rect x="260" y="240" width="280" height="200" rx="16"/>
+    <polygon points="380,460 440,520 320,500"/>
+    <rect x="660" y="240" width="280" height="200" rx="16"/>
+    <polygon points="820,460 760,520 880,500"/>
+  </g>
+  <text x="60" y="660" font-family="Inter, Arial, sans-serif" font-size="64" fill="#FFD873" font-weight="700">Comunicación Asertiva</text>
+  <text x="60" y="720" font-family="Inter, Arial, sans-serif" font-size="28" fill="#E0E7FF" opacity="0.85">Expresa con claridad y respeto</text>
+</svg>
+

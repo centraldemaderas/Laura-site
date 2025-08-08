@@ -1,0 +1,86 @@
+[
+  {
+    "id": "individual",
+    "title": "Terapia Individual",
+    "desc": "Sesiones personalizadas para trabajar en tu crecimiento personal, manejo de emociones y superación de dificultades. Enfoque en ansiedad, depresión, autoestima y desarrollo personal.",
+    "price": 80000,
+    "duration": "50 minutos",
+    "features": [
+      "Sesión personalizada 1 a 1",
+      "Enfoque en tus necesidades específicas",
+      "Herramientas prácticas para el día a día",
+      "Seguimiento continuo de tu progreso",
+      "Espacio seguro y confidencial"
+    ]
+  },
+  {
+    "id": "pareja",
+    "title": "Terapia de Pareja",
+    "desc": "Acompañamiento especializado para mejorar la comunicación, resolver conflictos y fortalecer tu relación. Trabajamos juntos para construir una relación más saludable.",
+    "price": 120000,
+    "duration": "80 minutos",
+    "features": [
+      "Sesiones para ambos miembros de la pareja",
+      "Mejora en la comunicación",
+      "Resolución de conflictos",
+      "Fortalecimiento del vínculo afectivo",
+      "Herramientas para el día a día"
+    ]
+  },
+  {
+    "id": "online",
+    "title": "Terapia Online",
+    "desc": "Sesiones virtuales desde la comodidad de tu hogar, manteniendo la misma calidad y profesionalismo. Ideal para personas con horarios ocupados o que prefieren la comodidad.",
+    "price": 70000,
+    "duration": "50 minutos",
+    "features": [
+      "Sesiones desde cualquier lugar",
+      "Misma calidad que sesiones presenciales",
+      "Horarios flexibles",
+      "Plataforma segura y confidencial",
+      "Sin necesidad de desplazamiento"
+    ]
+  },
+  {
+    "id": "adolescentes",
+    "title": "Terapia para Adolescentes",
+    "desc": "Acompañamiento especializado para adolescentes que enfrentan desafíos emocionales, sociales y de desarrollo. Creo un espacio seguro donde pueden expresarse libremente.",
+    "price": 75000,
+    "duration": "50 minutos",
+    "features": [
+      "Enfoque especializado en adolescentes",
+      "Espacio seguro para expresión",
+      "Manejo de ansiedad y estrés",
+      "Desarrollo de habilidades sociales",
+      "Acompañamiento en el proceso de crecimiento"
+    ]
+  },
+  {
+    "id": "familia",
+    "title": "Terapia Familiar",
+    "desc": "Trabajo con toda la familia para mejorar la dinámica familiar, resolver conflictos y fortalecer los vínculos afectivos. Enfoque sistémico para el bienestar colectivo.",
+    "price": 150000,
+    "duration": "90 minutos",
+    "features": [
+      "Sesiones con toda la familia",
+      "Mejora en la dinámica familiar",
+      "Resolución de conflictos",
+      "Fortalecimiento de vínculos",
+      "Herramientas para la comunicación familiar"
+    ]
+  },
+  {
+    "id": "evaluacion",
+    "title": "Evaluación Psicológica",
+    "desc": "Evaluación completa para identificar necesidades específicas y crear un plan de tratamiento personalizado. Incluye entrevista clínica y pruebas estandarizadas.",
+    "price": 200000,
+    "duration": "120 minutos",
+    "features": [
+      "Evaluación completa",
+      "Entrevista clínica detallada",
+      "Pruebas estandarizadas",
+      "Informe escrito detallado",
+      "Plan de tratamiento personalizado"
+    ]
+  }
+] 

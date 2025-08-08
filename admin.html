@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Laura Giraldo Psicóloga</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <img src="assets/logo.svg" alt="Laura Giraldo Psicóloga" class="admin-logo-img">
+                <h2>Panel Admin</h2>
+            </div>
+            
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="#dashboard" class="admin-nav-link active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a></li>
+                    <li><a href="#content" class="admin-nav-link" data-section="content">
+                        <i class="fas fa-edit"></i> Editar Contenido
+                    </a></li>
+                    <li><a href="#services" class="admin-nav-link" data-section="services">
+                        <i class="fas fa-briefcase"></i> Servicios
+                    </a></li>
+                    <li><a href="#images" class="admin-nav-link" data-section="images">
+                        <i class="fas fa-images"></i> Imágenes
+                    </a></li>
+                    <li><a href="#team" class="admin-nav-link" data-section="team">
+                        <i class="fas fa-users"></i> Equipo
+                    </a></li>
+                    <li><a href="#settings" class="admin-nav-link" data-section="settings">
+                        <i class="fas fa-cog"></i> Configuración
+                    </a></li>
+                </ul>
+            </nav>
+            
+            <div class="admin-footer">
+                <a href="../index.html" class="btn-secondary" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Ver Sitio
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="admin-section active">
+                <div class="admin-header">
+                    <h1>Dashboard</h1>
+                    <p>Bienvenida al panel de administración</p>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Páginas</h3>
+                            <p>6 páginas activas</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Servicios</h3>
+                            <p id="services-count">6 servicios</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Imágenes</h3>
+                            <p id="images-count">3 imágenes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Equipo</h3>
+                            <p>2 psicólogas</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <h2>Acciones Rápidas</h2>
+                    <div class="actions-grid">
+                        <button class="action-btn" onclick="showSection('content')">
+                            <i class="fas fa-edit"></i>
+                            Editar Textos
+                        </button>
+                        <button class="action-btn" onclick="showSection('services')">
+                            <i class="fas fa-plus"></i>
+                            Agregar Servicio
+                        </button>
+                        <button class="action-btn" onclick="showSection('images')">
+                            <i class="fas fa-upload"></i>
+                            Subir Imagen
+                        </button>
+                        <button class="action-btn" onclick="showSection('team')">
+                            <i class="fas fa-user-edit"></i>
+                            Editar Equipo
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Content Editor Section -->
+            <section id="content" class="admin-section">
+                <div class="admin-header">
+                    <h1>Editor de Contenido</h1>
+                    <p>Edita los textos principales del sitio web</p>
+                </div>
+                
+                <div class="content-editor">
+                    <div class="editor-tabs">
+                        <button class="tab-btn active" data-tab="home">Página Principal</button>
+                        <button class="tab-btn" data-tab="about">Sobre Nosotros</button>
+                        <button class="tab-btn" data-tab="contact">Contacto</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="home-content">
+                        <div class="form-group">
+                            <label for="hero-title">Título Principal</label>
+                            <input type="text" id="hero-title" value="Laura Giraldo Psicóloga" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="hero-subtitle">Subtítulo Principal</label>
+                            <textarea id="hero-subtitle" class="form-textarea" rows="3">Acompañamiento profesional para tu bienestar emocional y mental</textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="about-text">Texto Sobre Nosotros</label>
+                            <textarea id="about-text" class="form-textarea" rows="6">Somos un equipo de psicólogas profesionales comprometidas con tu bienestar emocional y mental. Ofrecemos un espacio seguro y confidencial donde puedes explorar tus emociones, superar dificultades y desarrollar herramientas para una vida más plena.</textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cta-text">Texto CTA Principal</label>
+                            <textarea id="cta-text" class="form-textarea" rows="3">¿Lista para comenzar tu proceso de crecimiento personal? Agenda tu primera consulta y da el primer paso hacia tu bienestar emocional.</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="about-content">
+                        <div class="form-group">
+                            <label for="team-title">Título del Equipo</label>
+                            <input type="text" id="team-title" value="Nuestro Equipo" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="team-subtitle">Subtítulo del Equipo</label>
+                            <textarea id="team-subtitle" class="form-textarea" rows="2">Conoce a nuestras psicólogas profesionales y su enfoque terapéutico</textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="philosophy-text">Filosofía</label>
+                            <textarea id="philosophy-text" class="form-textarea" rows="6">Creemos en el poder transformador de la terapia y en la capacidad innata de cada persona para crecer y sanar. Nuestro enfoque se basa en la empatía, el respeto y la evidencia científica, creando un espacio seguro donde puedes explorar tus emociones y desarrollar herramientas para una vida más plena.</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="contact-content">
+                        <div class="form-group">
+                            <label for="contact-title">Título de Contacto</label>
+                            <input type="text" id="contact-title" value="Contáctanos" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-text">Texto de Contacto</label>
+                            <textarea id="contact-text" class="form-textarea" rows="4">Estamos aquí para acompañarte en tu proceso. Contáctanos para agendar una consulta o resolver cualquier duda que tengas sobre nuestros servicios.</textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-email">Email de Contacto</label>
+                            <input type="email" id="contact-email" value="info@lauragiraldo.com" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-phone">Teléfono</label>
+                            <input type="tel" id="contact-phone" value="+57 300 123 4567" class="form-input">
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-primary" onclick="saveContent()">
+                            <i class="fas fa-save"></i> Guardar Cambios
+                        </button>
+                        <button class="btn-secondary" onclick="resetContent()">
+                            <i class="fas fa-undo"></i> Restaurar
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services" class="admin-section">
+                <div class="admin-header">
+                    <h1>Gestión de Servicios</h1>
+                    <p>Administra los servicios ofrecidos</p>
+                </div>
+                
+                <div class="services-manager">
+                    <div class="services-header">
+                        <button class="btn-primary" onclick="showAddServiceModal()">
+                            <i class="fas fa-plus"></i> Agregar Servicio
+                        </button>
+                    </div>
+                    
+                    <div class="services-list" id="services-list">
+                        <!-- Services will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Images Section -->
+            <section id="images" class="admin-section">
+                <div class="admin-header">
+                    <h1>Gestión de Imágenes</h1>
+                    <p>Sube y administra las imágenes del sitio</p>
+                </div>
+                
+                <div class="images-manager">
+                    <div class="upload-area">
+                        <div class="upload-zone" id="upload-zone">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Arrastra imágenes aquí o haz clic para seleccionar</h3>
+                            <p>Formatos soportados: JPG, PNG, SVG (máx. 5MB)</p>
+                            <input type="file" id="image-upload" multiple accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                    
+                    <div class="images-grid" id="images-grid">
+                        <!-- Images will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Team Section -->
+            <section id="team" class="admin-section">
+                <div class="admin-header">
+                    <h1>Gestión del Equipo</h1>
+                    <p>Administra la información del equipo</p>
+                </div>
+                
+                <div class="team-manager">
+                    <div class="team-member">
+                        <h3>Laura Giraldo</h3>
+                        <div class="member-form">
+                            <div class="form-group">
+                                <label for="laura-title">Título</label>
+                                <input type="text" id="laura-title" value="Psicóloga Clínica" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="laura-description">Descripción</label>
+                                <textarea id="laura-description" class="form-textarea" rows="6">Psicóloga clínica con más de 8 años de experiencia en el acompañamiento terapéutico. Especializada en terapia individual, de pareja y familiar. Mi enfoque se basa en la empatía y la evidencia científica, creando un espacio seguro donde puedes explorar tus emociones y desarrollar herramientas para una vida más plena.</textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="laura-photo">Foto</label>
+                                <div class="photo-upload">
+                                    <img src="assets/laura-giraldo.jpg" alt="Laura Giraldo" id="laura-photo-preview" class="photo-preview" loading="lazy" onerror="this.onerror=null;this.src='assets/laura-placeholder.svg';">
+                                    <input type="file" id="laura-photo-upload" accept="image/*" style="display: none;">
+                                    <button class="btn-secondary" onclick="document.getElementById('laura-photo-upload').click()">
+                                        <i class="fas fa-camera"></i> Cambiar Foto
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <h3>Luisa Fernanda Vásquez</h3>
+                        <div class="member-form">
+                            <div class="form-group">
+                                <label for="luisa-title">Título</label>
+                                <input type="text" id="luisa-title" value="Magister en Psicología de la Salud" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="luisa-description">Descripción</label>
+                                <textarea id="luisa-description" class="form-textarea" rows="6">Magister en Psicología de la Salud con enfoque holístico en el bienestar integral. Especializada en el manejo del estrés, ansiedad y desarrollo personal. Mi abordaje combina técnicas tradicionales con enfoques innovadores para promover el equilibrio entre mente, cuerpo y espíritu.</textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="luisa-photo">Foto</label>
+                                <div class="photo-upload">
+                                    <div class="photo-placeholder" id="luisa-photo-preview">
+                                        <i class="fas fa-user-md"></i>
+                                        <p>Sin foto</p>
+                                    </div>
+                                    <input type="file" id="luisa-photo-upload" accept="image/*" style="display: none;">
+                                    <button class="btn-secondary" onclick="document.getElementById('luisa-photo-upload').click()">
+                                        <i class="fas fa-camera"></i> Agregar Foto
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-primary" onclick="saveTeam()">
+                            <i class="fas fa-save"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="admin-section">
+                <div class="admin-header">
+                    <h1>Configuración</h1>
+                    <p>Configura los ajustes del sitio</p>
+                </div>
+                
+                <div class="settings-manager">
+                    <div class="settings-group">
+                        <h3>Información General</h3>
+                        
+                        <div class="form-group">
+                            <label for="site-title">Título del Sitio</label>
+                            <input type="text" id="site-title" value="Laura Giraldo - Psicóloga" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="site-description">Descripción del Sitio</label>
+                            <textarea id="site-description" class="form-textarea" rows="3">Psicóloga profesional especializada en terapia individual, de pareja y familiar. Acompañamiento terapéutico para tu bienestar emocional y mental.</textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-email">Email de Contacto</label>
+                            <input type="email" id="settings-contact-email" value="info@lauragiraldo.com" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-phone">Teléfono</label>
+                            <input type="tel" id="settings-contact-phone" value="+57 300 123 4567" class="form-input">
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Integraciones</h3>
+                        
+                        <div class="form-group">
+                            <label for="calendly-url">URL de Calendly</label>
+                            <input type="url" id="calendly-url" value="https://calendly.com/lauragiraldo/consulta" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="wompi-key">Clave Pública de Wompi</label>
+                            <input type="text" id="wompi-key" value="pub_test_TU_LLAVE" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="google-analytics">ID de Google Analytics</label>
+                            <input type="text" id="google-analytics" value="G-XXXXXXXXXX" class="form-input">
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="btn-primary" onclick="saveSettings()">
+                            <i class="fas fa-save"></i> Guardar Configuración
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Service Modal -->
+    <div id="add-service-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Agregar Nuevo Servicio</h2>
+                <button class="modal-close" onclick="closeAddServiceModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="new-service-title">Título del Servicio</label>
+                    <input type="text" id="new-service-title" class="form-input" placeholder="Ej: Terapia Individual">
+                </div>
+                
+                <div class="form-group">
+                    <label for="new-service-desc">Descripción</label>
+                    <textarea id="new-service-desc" class="form-textarea" rows="4" placeholder="Describe el servicio..."></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="new-service-price">Precio (COP)</label>
+                        <input type="number" id="new-service-price" class="form-input" placeholder="80000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-service-duration">Duración</label>
+                        <input type="text" id="new-service-duration" class="form-input" placeholder="50 minutos">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="new-service-features">Características (una por línea)</label>
+                    <textarea id="new-service-features" class="form-textarea" rows="4" placeholder="Sesión personalizada 1 a 1&#10;Enfoque en tus necesidades específicas&#10;Herramientas prácticas para el día a día"></textarea>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeAddServiceModal()">Cancelar</button>
+                <button class="btn-primary" onclick="addNewService()">Agregar Servicio</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Notifications -->
+    <div id="notification" class="notification"></div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html> 

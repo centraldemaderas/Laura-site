@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios - Laura Giraldo Psicóloga</title>
+    <meta name="description" content="Conoce todos mis servicios de psicología: terapia individual, de pareja, online y más. Agenda tu consulta personalizada.">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a class="nav-logo" href="index.html" aria-label="Ir al inicio">
+                    <img src="assets/logo-laura.png.png" alt="Laura Giraldo Psicóloga" onerror="this.onerror=null;this.src='assets/logo.png';" />
+                </a>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="sobre-mi.html" class="nav-link">Nuestro Equipo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="servicios.html" class="nav-link">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="reserva.html" class="nav-link">Reserva</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contacto.html" class="nav-link">Contacto</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1 class="hero-title">Mis Servicios</h1>
+            <p class="hero-subtitle">Elige el servicio que mejor se adapte a tus necesidades</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="container">
+            <div class="services-grid">
+                <!-- Los servicios se cargarán dinámicamente aquí -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="about" style="text-align: center;">
+        <div class="container">
+            <h2>¿No encuentras lo que buscas?</h2>
+            <p>Estoy aquí para ayudarte a encontrar la mejor opción para tu proceso de crecimiento personal. Contáctame para una consulta inicial sin costo.</p>
+            <div style="margin-top: 2rem;">
+                <a href="contacto.html" class="btn btn-primary">Contactar</a>
+                <a href="reserva.html" class="btn btn-secondary">Agendar Consulta</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Laura Giraldo</h3>
+                    <p>Psicóloga profesional comprometida con tu bienestar emocional y crecimiento personal.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="sobre-mi.html">Nuestro Equipo</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Servicios</h4>
+                    <ul>
+                        <li><a href="servicios.html">Terapia Individual</a></li>
+                        <li><a href="servicios.html">Terapia de Pareja</a></li>
+                        <li><a href="servicios.html">Terapia Online</a></li>
+                        <li><a href="reserva.html">Agendar Consulta</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Laura Giraldo. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div id="chat-bubble" aria-label="Abrir chat">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html> 
