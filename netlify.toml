@@ -1,6 +1,11 @@
 [build]
   command = ""
   publish = "."
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
 
 # Local dev: netlify dev
 [dev]

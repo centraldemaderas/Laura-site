@@ -270,22 +270,41 @@ p {
 
 /* Hero Section */
 .hero {
-    padding: 0;
     color: white;
+    position: relative;
     min-height: 80vh;
+    padding: 0;
     display: grid;
     place-items: center;
-    position: relative;
 }
 
 .hero-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 1.25rem;
     text-align: center;
+    width: 100%;
 }
+
+/* Rediseño con ondas subrayadas */
+.hero--wave{ overflow:hidden; background: radial-gradient(1200px 600px at 50% 0%, rgba(255,216,115,.08) 0%, rgba(13,22,37,1) 40%, #03070D 100%); }
+.hero-inner{ position:relative; z-index:2; }
+.brand-strap{ margin-bottom: .75rem; opacity:.95 }
+.brand-logo{ height:32px; width:auto; filter: drop-shadow(0 1px 1px rgba(0,0,0,.4)); }
+.hero-heading{ font-weight:800; font-size: clamp(32px,6vw,64px); line-height:1.06; letter-spacing:.2px; color: var(--text); margin:.25rem 0 .5rem; }
+.hero-tagline{ color: var(--muted); font-size: clamp(16px,2.2vw,20px); margin: 0 0 1.25rem; }
+.cta-row{ display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center }
+
+/* Underline-wave animation using SVG as background */
+.wave{ position:absolute; left:0; width:200%; height:120px; opacity:.2; background-repeat: repeat-x; background-size: contain; z-index:1; }
+.wave-1{ top:20%; animation: waveScroll 18s linear infinite; background-image: url('assets/impact-illustration.svg'); }
+.wave-2{ top:58%; animation: waveScroll 26s linear infinite reverse; background-image: url('assets/impact-illustration.svg'); }
+@keyframes waveScroll{ from{ transform: translateX(0);} to{ transform: translateX(-50%);} }
 
 .hero-logo {
     margin-bottom: 2rem;

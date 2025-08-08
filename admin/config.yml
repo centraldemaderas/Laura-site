@@ -1,0 +1,54 @@
+backend:
+  name: git-gateway
+  branch: main
+
+site_url: /
+logo_url: /assets/logo.png
+media_folder: assets
+public_folder: /assets
+
+publish_mode: editorial_workflow
+local_backend: true
+
+collections:
+  - name: "paginas"
+    label: "Páginas"
+    files:
+      - name: "inicio"
+        label: "Inicio (index.html)"
+        file: "index.html"
+        fields:
+          - { label: "Título hero", name: "hero_title", widget: "string", pattern: ['.*', ''], hint: "Texto grande del banner" }
+          - { label: "Subtítulo hero", name: "hero_subtitle", widget: "text" }
+      - name: "sobre_mi"
+        label: "Sobre Mí (sobre-mi.html)"
+        file: "sobre-mi.html"
+        fields:
+          - { label: "Texto principal", name: "about_text", widget: "text" }
+          - { label: "Foto de Laura", name: "about_photo", widget: "image" }
+      - name: "servicios"
+        label: "Servicios (servicios.html)"
+        file: "servicios.html"
+        fields:
+          - { label: "Intro servicios", name: "services_intro", widget: "text" }
+
+  - name: "servicios_data"
+    label: "Lista de Servicios"
+    label_singular: "Servicio"
+    folder: "services.json"
+    editor:
+      preview: false
+    delete: false
+    fields:
+      - { label: "JSON de servicios", name: "body", widget: "code", default_language: "json" }
+
+  - name: "blog"
+    label: "Blog (tarjetas)"
+    files:
+      - name: "listado"
+        label: "Listado de artículos"
+        file: "blog.html"
+        fields:
+          - { label: "Contenido HTML", name: "body", widget: "code", default_language: "html" }
+
+

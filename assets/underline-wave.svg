@@ -1,0 +1,9 @@
+<svg width="480" height="40" viewBox="0 0 480 40" xmlns="http://www.w3.org/2000/svg">
+  <path id="w" d="M0,20 C60,5 120,35 180,20 240,5 300,35 360,20 420,5 480,35 540,20"
+        fill="none" stroke="#FFD873" stroke-width="3"/>
+  <animate xlink:href="#w" attributeName="d"
+    values="M0,20 C60,5 120,35 180,20 240,5 300,35 360,20 420,5 480,35 540,20;
+            M0,22 C60,7 120,33 180,22 240,7 300,33 360,22 420,7 480,33 540,22;
+            M0,20 C60,5 120,35 180,20 240,5 300,35 360,20 420,5 480,35 540,20"
+    dur="5s" repeatCount="indefinite"/>
+</svg>
